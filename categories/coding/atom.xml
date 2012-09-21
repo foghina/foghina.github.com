@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Coding | Code Ramblings]]></title>
+  <link href="http://foghina.com/categories/coding/atom.xml" rel="self"/>
+  <link href="http://foghina.com/"/>
+  <updated>2012-09-21T18:25:09+03:00</updated>
+  <id>http://foghina.com/</id>
+  <author>
+    <name><![CDATA[Felix Oghină]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Beware of the JavaScript reference!]]></title>
+    <link href="http://foghina.com/2012/04/23/beware-of-the-javascript-reference/"/>
+    <updated>2012-04-23T00:36:47+03:00</updated>
+    <id>http://foghina.com/2012/04/23/beware-of-the-javascript-reference</id>
+    <content type="html"><![CDATA[<p>As you (hopefully) know, variables in JavaScript are actually references. As you (most surely) know, references can bite you in the ass in the most unexpected places, so here's one of them. Say you have an object that you continuously change (e.g. recursively) and want to see how it "evolves" by calling console.log() on it. You would expect to see "snapshots" of the object logged, right? Wrong. For example, try running this code in a console (<strong>Note:</strong> I have only tried this in Chrome, not sure how other browsers behave):</p>
+
+<p><code>javascript
+var mutant = {"name": "Leela Turanga"};
+console.log(mutant);
+mutant["characteristic"] = "One eye";
+</code></p>
+
+<p>Now, expand the Object and voilà, you'll see both properties. This can be very confusing with more complicated objects. If you're too lazy to run that code, here's proof:</p>
+
+<p><img src="http://blog.foghina.com/wp-content/uploads/2012/04/Screenshot-at-2012-04-22-212356.png" alt="" /></p>
+
+<p>As a solution, you can clone the object before logging it. <a href="http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-a-javascript-object">Here</a> are a few suggestions for how to do that.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Rails setup with RVM on Ubuntu]]></title>
+    <link href="http://foghina.com/2012/04/17/rails-setup-with-rvm-on-ubuntu/"/>
+    <updated>2012-04-17T03:39:45+03:00</updated>
+    <id>http://foghina.com/2012/04/17/rails-setup-with-rvm-on-ubuntu</id>
+    <content type="html"><![CDATA[<p>Given how developer friendly as Ruby on Rails is, getting a development environment up and running can be surprisingly tricky. I will describe the process that I consider to be "best practice" here, step by step. Although my guide will be focused on Ubuntu, the general idea should be the same on other distros as well. Also, please take note of the date of this post. If you're reading this even a few months after I wrote this, don't be surprised if your mileage will vary.</p>
+
+<p><del>First off, we're going to need Ruby, right? So let's install that, and also throw in curl (we're going to need it in a bit):</del></p>
+
+<p><strong>Update:</strong> actually, you don't need Ruby installed on your system at all. Installing curl is enough here:</p>
+
+<p><code>console
+$ sudo apt-get install curl
+</code></p>
+
+<p>Next, we're going to install <a href="https://rvm.io/">RVM</a>. RVM is, at the website puts it, a Ruby Version Manager. Basically, it allows you to install multiple versions of Ruby in your home folder and use them seamlessly (as if they were the default Ruby in the system). This is useful for us because the version of Ruby Ubuntu installed is 1.8.7 (as of this writing), while the latest stable version of Ruby is 1.9.3. RVM also allows us to keep separate collections of gems (called gemsets, for obvious reasons). This is very useful when working with multiple projects that may have conflicting dependencies.</p>
+
+<p>Installing RVM is dead simple. Just run the command under <strong>Quick Install</strong>:</p>
+
+<p><code>console
+$ curl -L get.rvm.io | bash -s stable
+</code></p>
+
+<p><strong>Warning:</strong> the above command might not be the latest one. Make sure to double check with the RVM website.</p>
+
+<p>Now, close the current terminal and open a new one. This is so that RVM can load into the new bash session. Now, let's see what RVM suggests we should install:</p>
+
+<p>``` console
+$ rvm requirements</p>
+
+<p>Requirements for Linux ( DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=11.10
+DISTRIB_CODENAME=oneiric
+DISTRIB_DESCRIPTION="Ubuntu 11.10" )</p>
+
+<p>NOTE: 'ruby' represents Matz's Ruby Interpreter (MRI) (1.8.X, 1.9.X)</p>
+
+<pre><code>         This is the *original* / standard Ruby Language Interpreter
+  'ree'  represents Ruby Enterprise Edition
+  'rbx'  represents Rubinius
+</code></pre>
+
+<p>bash >= 4.1 required
+curl is required
+git is required (>= 1.7 for ruby-head)
+patch is required (for 1.8 rubies and some ruby-head's).</p>
+
+<p>To install rbx and/or Ruby 1.9 head (MRI) (eg. 1.9.2-head),
+then you must install and use rvm 1.8.7 first.</p>
+
+<p>Additional Dependencies:</p>
+
+<h1>For Ruby / Ruby HEAD (MRI, Rubinius, &amp; REE), install the following:</h1>
+
+<p>  ruby: /usr/bin/apt-get install build-essential openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison subversion</p>
+
+<h1>For JRuby, install the following:</h1>
+
+<p>  jruby: /usr/bin/apt-get install curl g++ openjdk-6-jre-headless
+  jruby-head: /usr/bin/apt-get install ant openjdk-6-jdk</p>
+
+<h1>For IronRuby, install the following:</h1>
+
+<p>  ironruby: /usr/bin/apt-get install curl mono-2.0-devel
+```</p>
+
+<p>Install the dependencies suggested by RVM for Ruby (see the marked lines above and make sure to use sudo).</p>
+
+<p>Good. Now it's time to install Ruby! <strong>Again.</strong> The next command will install the latest stable Ruby into your home directory (so the system is not affected). Beware, it will take a long time to complete, as it downloads the Ruby source code and compiles it!</p>
+
+<p><code>console
+$ rvm install ruby
+</code></p>
+
+<p>Now, if the command above finishes with a message similar to:</p>
+
+<pre><code>RVM is not a function, selecting rubies with 'rvm use ...' will not work.
+Please visit https://rvm.io/integration/gnome-terminal/ for a solution.
+</code></pre>
+
+<p>Then do visit that URL and follow the instructions there. Finished? Good. Open a new terminal, <strong>again</strong>. Now type:</p>
+
+<p><code>console
+$ rvm use ruby
+</code></p>
+
+<p>If all went well, you should see a green message telling you which Ruby is being used. Next, you should create a gemset (we talked about them in the beginning) for your new project, and also switch to it:</p>
+
+<p><code>console
+$ rvm gemset create myproject &amp;&amp; rvm gemset use myproject
+</code></p>
+
+<p>You finally have your environment set up. Next step is to install the rails gem:</p>
+
+<p><code>console
+$ gem install rails --no-rdoc --no-ri
+</code></p>
+
+<p><strong>Note:</strong> the --no-rdoc --no-ri parameters are passed so that it doesn't waste time installing docs that are available on the Internet anyway. If you wish to have them installed for some reason, just omit those parameters.</p>
+
+<p>Good, now you're ready to create your new Rails app! Simply type:</p>
+
+<p><code>console
+$ rails new myproject
+</code></p>
+
+<p>To run the new app:</p>
+
+<p><code>console
+$ cd myproject/
+$ rails server
+</code></p>
+
+<p>You just got an error now, didn't you? Did it sound like this?</p>
+
+<p><code>console
+in `autodetect': Could not find a JavaScript runtime. See https://github.com/sstephenson/execjs for a list of available runtimes. (ExecJS::RuntimeUnavailable)
+</code></p>
+
+<p>What's happening is that Rails needs a JavaScript runtime (well, duh, it says so right in the error message!). What it needs it for, from what I can tell, is the new CoffeeScript (and LESS?) functionality added in the asset pipeline in Rails 3.1. To fix this, just require a JavaScript runtime gem in your app. We're going to use one called "therubyracer". Open up the file called "Gemfile" and add this line to it:</p>
+
+<p><code>console
+gem 'therubyracer'
+</code></p>
+
+<p>Now, in order to actually install that gem, just run:</p>
+
+<p><code>console
+$ bundle
+</code></p>
+
+<p>in your project's directory. The bundle command basically looks in your Gemfile and installs / updates dependencies based on it. Running the app should now actually finally ultimately work:</p>
+
+<p><code>console
+$ rails server
+=&gt; Booting WEBrick
+=&gt; Rails 3.2.3 application starting in development on http://0.0.0.0:3000
+=&gt; Call with -d to detach
+=&gt; Ctrl-C to shutdown server
+[2012-04-17 00:24:51] INFO  WEBrick 1.3.1
+[2012-04-17 00:24:51] INFO  ruby 1.9.3 (2012-02-16) [x86_64-linux]
+[2012-04-17 00:24:51] INFO  WEBrick::HTTPServer#start: pid=4595 port=3000
+</code></p>
+
+<p>Now, every time you open a new terminal and intend to run the project, you will have to:</p>
+
+<p><code>console
+$ cd myproject/
+$ rvm use ruby
+$ rvm gemset use myproject
+$ rails server
+</code></p>
+
+<p>If you want to skip the two <code>rvm</code> commands, you can use an <code>.rvmrc</code> file. That, however, is beyond the scope of this post, and is documented <a href="https://rvm.io/workflow/rvmrc/">here</a>.</p>
+
+<p>As I was saying, surprisingly tricky. Sure, you could have used the Ruby and Rails provided by your package manager, but given the rapid development of both, you would be several major versions behind and lacking many features. Also, managing multiple projects is now a breeze. Just install the required Ruby (some projects might rely on older versions of it), create a new gemset for it, install dependencies, run.</p>
+
+<p>Whew!</p>
+]]></content>
+  </entry>
+  
+</feed>

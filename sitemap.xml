@@ -1,11 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://blog.foghina.com/</loc>
-        <lastmod>2012-09-17T21:42:04+03:00</lastmod>
+        <loc>http://foghina.com/2012/04/17/rails-setup-with-rvm-on-ubuntu/</loc>
+        <lastmod>2012-09-21T14:39:19+03:00</lastmod>
     </url>
     <url>
-        <loc>http://blog.foghina.com/blog/archives/</loc>
-        <lastmod>2012-09-17T21:42:04+03:00</lastmod>
+        <loc>http://foghina.com/2012/04/23/beware-of-the-javascript-reference/</loc>
+        <lastmod>2012-09-21T14:35:02+03:00</lastmod>
+    </url>
+    <url>
+        <loc>http://foghina.com/</loc>
+        <lastmod>2012-09-21T14:39:19+03:00</lastmod>
+    </url>
+    <url>
+        <loc>http://foghina.com/blog/archives/</loc>
+        <lastmod>2012-09-21T14:39:19+03:00</lastmod>
     </url>
 </urlset>

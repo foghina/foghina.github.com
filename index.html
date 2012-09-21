@@ -9,7 +9,7 @@
   <meta name="author" content="Felix Oghină">
 
   
-  <meta name="description" content=" Blog Archives Recent Posts Google+ ">
+  <meta name="description" content="As you (hopefully) know, variables in JavaScript are actually references. As you (most surely) know, references can bite you in the ass in the most &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.foghina.com/">
+  <link rel="canonical" href="http://foghina.com/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -61,7 +61,7 @@
   
 <form action="http://google.com/search" method="get">
   <fieldset role="search">
-    <input type="hidden" name="q" value="site:blog.foghina.com" />
+    <input type="hidden" name="q" value="site:foghina.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
@@ -77,6 +77,293 @@
       <div class="blog-index">
   
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/04/23/beware-of-the-javascript-reference/">Beware of the JavaScript reference!</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-23T00:36:47+03:00" pubdate data-updated="true">Apr 23<span>rd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>As you (hopefully) know, variables in JavaScript are actually references. As you (most surely) know, references can bite you in the ass in the most unexpected places, so here&#8217;s one of them. Say you have an object that you continuously change (e.g. recursively) and want to see how it &#8220;evolves&#8221; by calling console.log() on it. You would expect to see &#8220;snapshots&#8221; of the object logged, right? Wrong. For example, try running this code in a console (<strong>Note:</strong> I have only tried this in Chrome, not sure how other browsers behave):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">mutant</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;Leela Turanga&quot;</span><span class="p">};</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">mutant</span><span class="p">);</span>
+</span><span class='line'><span class="nx">mutant</span><span class="p">[</span><span class="s2">&quot;characteristic&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;One eye&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, expand the Object and voilà, you&#8217;ll see both properties. This can be very confusing with more complicated objects. If you&#8217;re too lazy to run that code, here&#8217;s proof:</p>
+
+<p><img src="http://blog.foghina.com/wp-content/uploads/2012/04/Screenshot-at-2012-04-22-212356.png" alt="" /></p>
+
+<p>As a solution, you can clone the object before logging it. <a href="http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-a-javascript-object">Here</a> are a few suggestions for how to do that.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/04/17/rails-setup-with-rvm-on-ubuntu/">Rails setup with RVM on Ubuntu</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-17T03:39:45+03:00" pubdate data-updated="true">Apr 17<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Given how developer friendly as Ruby on Rails is, getting a development environment up and running can be surprisingly tricky. I will describe the process that I consider to be &#8220;best practice&#8221; here, step by step. Although my guide will be focused on Ubuntu, the general idea should be the same on other distros as well. Also, please take note of the date of this post. If you&#8217;re reading this even a few months after I wrote this, don&#8217;t be surprised if your mileage will vary.</p>
+
+<p><del>First off, we&#8217;re going to need Ruby, right? So let&#8217;s install that, and also throw in curl (we&#8217;re going to need it in a bit):</del></p>
+
+<p><strong>Update:</strong> actually, you don&#8217;t need Ruby installed on your system at all. Installing curl is enough here:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">$</span> sudo apt-get install curl
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next, we&#8217;re going to install <a href="https://rvm.io/">RVM</a>. RVM is, at the website puts it, a Ruby Version Manager. Basically, it allows you to install multiple versions of Ruby in your home folder and use them seamlessly (as if they were the default Ruby in the system). This is useful for us because the version of Ruby Ubuntu installed is 1.8.7 (as of this writing), while the latest stable version of Ruby is 1.9.3. RVM also allows us to keep separate collections of gems (called gemsets, for obvious reasons). This is very useful when working with multiple projects that may have conflicting dependencies.</p>
+
+<p>Installing RVM is dead simple. Just run the command under <strong>Quick Install</strong>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">$</span> curl -L get.rvm.io | bash -s stable
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Warning:</strong> the above command might not be the latest one. Make sure to double check with the RVM website.</p>
+
+<p>Now, close the current terminal and open a new one. This is so that RVM can load into the new bash session. Now, let&#8217;s see what RVM suggests we should install:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">$</span> rvm requirements
+</span><span class='line'>
+</span><span class='line'><span class="go">Requirements for Linux ( DISTRIB_ID=Ubuntu</span>
+</span><span class='line'><span class="go">DISTRIB_RELEASE=11.10</span>
+</span><span class='line'><span class="go">DISTRIB_CODENAME=oneiric</span>
+</span><span class='line'><span class="go">DISTRIB_DESCRIPTION=&quot;Ubuntu 11.10&quot; )</span>
+</span><span class='line'>
+</span><span class='line'><span class="go">NOTE: &#39;ruby&#39; represents Matz&#39;s Ruby Interpreter (MRI) (1.8.X, 1.9.X)</span>
+</span><span class='line'><span class="go">             This is the *original* / standard Ruby Language Interpreter</span>
+</span><span class='line'><span class="go">      &#39;ree&#39;  represents Ruby Enterprise Edition</span>
+</span><span class='line'><span class="go">      &#39;rbx&#39;  represents Rubinius</span>
+</span><span class='line'>
+</span><span class='line'><span class="go">bash &gt;= 4.1 required</span>
+</span><span class='line'><span class="go">curl is required</span>
+</span><span class='line'><span class="go">git is required (&gt;= 1.7 for ruby-head)</span>
+</span><span class='line'><span class="go">patch is required (for 1.8 rubies and some ruby-head&#39;s).</span>
+</span><span class='line'>
+</span><span class='line'><span class="go">To install rbx and/or Ruby 1.9 head (MRI) (eg. 1.9.2-head),</span>
+</span><span class='line'><span class="go">then you must install and use rvm 1.8.7 first.</span>
+</span><span class='line'>
+</span><span class='line'><span class="go">Additional Dependencies:</span>
+</span><span class='line'><span class="gp">#</span> For Ruby / Ruby HEAD <span class="o">(</span>MRI, Rubinius, &amp; REE<span class="o">)</span>, install the following:
+</span><span class='line'><span class="go">  ruby: /usr/bin/apt-get install build-essential openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison subversion</span>
+</span><span class='line'>
+</span><span class='line'><span class="gp">#</span> For JRuby, install the following:
+</span><span class='line'><span class="go">  jruby: /usr/bin/apt-get install curl g++ openjdk-6-jre-headless</span>
+</span><span class='line'><span class="go">  jruby-head: /usr/bin/apt-get install ant openjdk-6-jdk</span>
+</span><span class='line'>
+</span><span class='line'><span class="gp">#</span> For IronRuby, install the following:
+</span><span class='line'><span class="go">  ironruby: /usr/bin/apt-get install curl mono-2.0-devel</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Install the dependencies suggested by RVM for Ruby (see the marked lines above and make sure to use sudo).</p>
+
+<p>Good. Now it&#8217;s time to install Ruby! <strong>Again.</strong> The next command will install the latest stable Ruby into your home directory (so the system is not affected). Beware, it will take a long time to complete, as it downloads the Ruby source code and compiles it!</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">$</span> rvm install ruby
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, if the command above finishes with a message similar to:</p>
+
+<pre><code>RVM is not a function, selecting rubies with 'rvm use ...' will not work.
+Please visit https://rvm.io/integration/gnome-terminal/ for a solution.
+</code></pre>
+
+<p>Then do visit that URL and follow the instructions there. Finished? Good. Open a new terminal, <strong>again</strong>. Now type:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">$</span> rvm use ruby
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If all went well, you should see a green message telling you which Ruby is being used. Next, you should create a gemset (we talked about them in the beginning) for your new project, and also switch to it:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">$</span> rvm gemset create myproject <span class="o">&amp;&amp;</span> rvm gemset use myproject
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You finally have your environment set up. Next step is to install the rails gem:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">$</span> gem install rails --no-rdoc --no-ri
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Note:</strong> the &#8211;no-rdoc &#8211;no-ri parameters are passed so that it doesn&#8217;t waste time installing docs that are available on the Internet anyway. If you wish to have them installed for some reason, just omit those parameters.</p>
+
+<p>Good, now you&#8217;re ready to create your new Rails app! Simply type:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">$</span> rails new myproject
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To run the new app:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">$</span> <span class="nb">cd </span>myproject/
+</span><span class='line'><span class="gp">$</span> rails server
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You just got an error now, didn&#8217;t you? Did it sound like this?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="go">in `autodetect&#39;: Could not find a JavaScript runtime. See https://github.com/sstephenson/execjs for a list of available runtimes. (ExecJS::RuntimeUnavailable)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>What&#8217;s happening is that Rails needs a JavaScript runtime (well, duh, it says so right in the error message!). What it needs it for, from what I can tell, is the new CoffeeScript (and LESS?) functionality added in the asset pipeline in Rails 3.1. To fix this, just require a JavaScript runtime gem in your app. We&#8217;re going to use one called &#8220;therubyracer&#8221;. Open up the file called &#8220;Gemfile&#8221; and add this line to it:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="go">gem &#39;therubyracer&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, in order to actually install that gem, just run:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">$</span> bundle
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>in your project&#8217;s directory. The bundle command basically looks in your Gemfile and installs / updates dependencies based on it. Running the app should now actually finally ultimately work:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">$</span> rails server
+</span><span class='line'><span class="go">=&gt; Booting WEBrick</span>
+</span><span class='line'><span class="go">=&gt; Rails 3.2.3 application starting in development on http://0.0.0.0:3000</span>
+</span><span class='line'><span class="go">=&gt; Call with -d to detach</span>
+</span><span class='line'><span class="go">=&gt; Ctrl-C to shutdown server</span>
+</span><span class='line'><span class="go">[2012-04-17 00:24:51] INFO  WEBrick 1.3.1</span>
+</span><span class='line'><span class="go">[2012-04-17 00:24:51] INFO  ruby 1.9.3 (2012-02-16) [x86_64-linux]</span>
+</span><span class='line'><span class="go">[2012-04-17 00:24:51] INFO  WEBrick::HTTPServer#start: pid=4595 port=3000</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, every time you open a new terminal and intend to run the project, you will have to:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">$</span> <span class="nb">cd </span>myproject/
+</span><span class='line'><span class="gp">$</span> rvm use ruby
+</span><span class='line'><span class="gp">$</span> rvm gemset use myproject
+</span><span class='line'><span class="gp">$</span> rails server
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you want to skip the two <code>rvm</code> commands, you can use an <code>.rvmrc</code> file. That, however, is beyond the scope of this post, and is documented <a href="https://rvm.io/workflow/rvmrc/">here</a>.</p>
+
+<p>As I was saying, surprisingly tricky. Sure, you could have used the Ruby and Rails provided by your package manager, but given the rapid development of both, you would be several major versions behind and lacking many features. Also, managing multiple projects is now a breeze. Just install the required Ruby (some projects might rely on older versions of it), create a new gemset for it, install dependencies, run.</p>
+
+<p>Whew!</p>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
     <a href="/blog/archives">Blog Archives</a>
@@ -88,6 +375,14 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2012/04/23/beware-of-the-javascript-reference/">Beware of the JavaScript reference!</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/04/17/rails-setup-with-rvm-on-ubuntu/">Rails setup with RVM on Ubuntu</a>
+      </li>
     
   </ul>
 </section>

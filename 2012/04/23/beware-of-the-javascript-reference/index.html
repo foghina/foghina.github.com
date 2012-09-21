@@ -5,13 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Blog Archive - Code Ramblings</title>
+  <title>Beware of the JavaScript reference! - Code Ramblings</title>
   <meta name="author" content="Felix Oghină">
 
   
-  <meta name="description" content="Blog Archive 2012 Beware of the JavaScript reference!
-Apr 23 2012 posted in Coding Rails setup with RVM on Ubuntu
-Apr 17 2012 posted in Coding &hellip;">
+  <meta name="description" content="As you (hopefully) know, variables in JavaScript are actually references. As you (most surely) know, references can bite you in the ass in the most &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +18,7 @@ Apr 17 2012 posted in Coding &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://foghina.com/blog/archives/">
+  <link rel="canonical" href="http://foghina.com/2012/04/23/beware-of-the-javascript-reference/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -77,50 +75,108 @@ Apr 17 2012 posted in Coding &hellip;">
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Blog Archive</h1>
+    
+      <h1 class="entry-title">Beware of the JavaScript reference!</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-23T00:36:47+03:00" pubdate data-updated="true">Apr 23<span>rd</span>, 2012</time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives">
 
 
+<div class="entry-content"><p>As you (hopefully) know, variables in JavaScript are actually references. As you (most surely) know, references can bite you in the ass in the most unexpected places, so here&#8217;s one of them. Say you have an object that you continuously change (e.g. recursively) and want to see how it &#8220;evolves&#8221; by calling console.log() on it. You would expect to see &#8220;snapshots&#8221; of the object logged, right? Wrong. For example, try running this code in a console (<strong>Note:</strong> I have only tried this in Chrome, not sure how other browsers behave):</p>
 
-  
-  <h2>2012</h2>
-
-<article>
-  
-<h1><a href="/2012/04/23/beware-of-the-javascript-reference/">Beware of the JavaScript reference!</a></h1>
-<time datetime="2012-04-23T00:36:47+03:00" pubdate><span class='month'>Apr</span> <span class='day'>23</span> <span class='year'>2012</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/categories/coding/'>Coding</a></span>
-</footer>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">mutant</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;Leela Turanga&quot;</span><span class="p">};</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">mutant</span><span class="p">);</span>
+</span><span class='line'><span class="nx">mutant</span><span class="p">[</span><span class="s2">&quot;characteristic&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;One eye&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-</article>
+<p>Now, expand the Object and voilà, you&#8217;ll see both properties. This can be very confusing with more complicated objects. If you&#8217;re too lazy to run that code, here&#8217;s proof:</p>
 
+<p><img src="http://blog.foghina.com/wp-content/uploads/2012/04/Screenshot-at-2012-04-22-212356.png" alt="" /></p>
 
-
-<article>
-  
-<h1><a href="/2012/04/17/rails-setup-with-rvm-on-ubuntu/">Rails setup with RVM on Ubuntu</a></h1>
-<time datetime="2012-04-17T03:39:45+03:00" pubdate><span class='month'>Apr</span> <span class='day'>17</span> <span class='year'>2012</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/categories/coding/'>Coding</a></span>
-</footer>
-
-
-</article>
-
+<p>As a solution, you can clone the object before logging it. <a href="http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-a-javascript-object">Here</a> are a few suggestions for how to do that.</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Felix Oghină</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-23T00:36:47+03:00" pubdate data-updated="true">Apr 23<span>rd</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/coding/'>Coding</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://foghina.com/2012/04/23/beware-of-the-javascript-reference/" data-via="" data-counturl="http://foghina.com/2012/04/23/beware-of-the-javascript-reference/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/04/17/rails-setup-with-rvm-on-ubuntu/" title="Previous Post: Rails setup with RVM on Ubuntu">&laquo; Rails setup with RVM on Ubuntu</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -173,7 +229,10 @@ Apr 17 2012 posted in Coding &hellip;">
       var disqus_shortname = 'coderamblings';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://foghina.com/2012/04/23/beware-of-the-javascript-reference/';
+        var disqus_url = 'http://foghina.com/2012/04/23/beware-of-the-javascript-reference/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
