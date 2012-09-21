@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Coding | Code Ramblings]]></title>
-  <link href="http://foghina.com/categories/coding/atom.xml" rel="self"/>
-  <link href="http://foghina.com/"/>
-  <updated>2012-09-21T18:25:09+03:00</updated>
-  <id>http://foghina.com/</id>
+  <link href="http://blog.foghina.com/categories/coding/atom.xml" rel="self"/>
+  <link href="http://blog.foghina.com/"/>
+  <updated>2012-09-21T18:29:40+03:00</updated>
+  <id>http://blog.foghina.com/</id>
   <author>
     <name><![CDATA[Felix Oghină]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Beware of the JavaScript reference!]]></title>
-    <link href="http://foghina.com/2012/04/23/beware-of-the-javascript-reference/"/>
+    <link href="http://blog.foghina.com/2012/04/23/beware-of-the-javascript-reference/"/>
     <updated>2012-04-23T00:36:47+03:00</updated>
-    <id>http://foghina.com/2012/04/23/beware-of-the-javascript-reference</id>
+    <id>http://blog.foghina.com/2012/04/23/beware-of-the-javascript-reference</id>
     <content type="html"><![CDATA[<p>As you (hopefully) know, variables in JavaScript are actually references. As you (most surely) know, references can bite you in the ass in the most unexpected places, so here's one of them. Say you have an object that you continuously change (e.g. recursively) and want to see how it "evolves" by calling console.log() on it. You would expect to see "snapshots" of the object logged, right? Wrong. For example, try running this code in a console (<strong>Note:</strong> I have only tried this in Chrome, not sure how other browsers behave):</p>
 
 <p><code>javascript
@@ -36,9 +36,9 @@ mutant["characteristic"] = "One eye";
   
   <entry>
     <title type="html"><![CDATA[Rails setup with RVM on Ubuntu]]></title>
-    <link href="http://foghina.com/2012/04/17/rails-setup-with-rvm-on-ubuntu/"/>
+    <link href="http://blog.foghina.com/2012/04/17/rails-setup-with-rvm-on-ubuntu/"/>
     <updated>2012-04-17T03:39:45+03:00</updated>
-    <id>http://foghina.com/2012/04/17/rails-setup-with-rvm-on-ubuntu</id>
+    <id>http://blog.foghina.com/2012/04/17/rails-setup-with-rvm-on-ubuntu</id>
     <content type="html"><![CDATA[<p>Given how developer friendly as Ruby on Rails is, getting a development environment up and running can be surprisingly tricky. I will describe the process that I consider to be "best practice" here, step by step. Although my guide will be focused on Ubuntu, the general idea should be the same on other distros as well. Also, please take note of the date of this post. If you're reading this even a few months after I wrote this, don't be surprised if your mileage will vary.</p>
 
 <p><del>First off, we're going to need Ruby, right? So let's install that, and also throw in curl (we're going to need it in a bit):</del></p>
