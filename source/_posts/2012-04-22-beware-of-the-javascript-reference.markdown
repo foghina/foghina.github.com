@@ -21,6 +21,6 @@ mutant["characteristic"] = "One eye";
 
 Now, expand the Object and voilà, you'll see both properties. This can be very confusing with more complicated objects. If you're too lazy to run that code, here's proof:
 
-![](http://blog.foghina.com/wp-content/uploads/2012/04/Screenshot-at-2012-04-22-212356.png)
+{% img /images/posts/javascript-reference.png Screenshot of Chrome console %}
 
 As a solution, you can clone the object before logging it. [Here](http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-a-javascript-object) are a few suggestions for how to do that.
