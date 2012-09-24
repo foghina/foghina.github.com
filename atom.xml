@@ -4,7 +4,7 @@
   <title><![CDATA[Code Ramblings]]></title>
   <link href="http://blog.foghina.com/atom.xml" rel="self"/>
   <link href="http://blog.foghina.com/"/>
-  <updated>2012-09-21T18:52:17+03:00</updated>
+  <updated>2012-09-24T15:05:18+03:00</updated>
   <id>http://blog.foghina.com/</id>
   <author>
     <name><![CDATA[Felix Oghină]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Beware of the JavaScript reference!]]></title>
-    <link href="http://blog.foghina.com/2012/04/23/beware-of-the-javascript-reference/"/>
-    <updated>2012-04-23T00:36:47+03:00</updated>
-    <id>http://blog.foghina.com/2012/04/23/beware-of-the-javascript-reference</id>
+    <link href="http://blog.foghina.com/2012/04/22/beware-of-the-javascript-reference/"/>
+    <updated>2012-04-22T15:00:00+03:00</updated>
+    <id>http://blog.foghina.com/2012/04/22/beware-of-the-javascript-reference</id>
     <content type="html"><![CDATA[<p>As you (hopefully) know, variables in JavaScript are actually references. As you (most surely) know, references can bite you in the ass in the most unexpected places, so here&#8217;s one of them. Say you have an object that you continuously change (e.g. recursively) and want to see how it &#8220;evolves&#8221; by calling console.log() on it. You would expect to see &#8220;snapshots&#8221; of the object logged, right? Wrong. For example, try running this code in a console (<strong>Note:</strong> I have only tried this in Chrome, not sure how other browsers behave):</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
