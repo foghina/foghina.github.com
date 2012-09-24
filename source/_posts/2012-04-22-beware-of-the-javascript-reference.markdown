@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2012-04-22 21:36:47
+date: 2012-04-22 12:00:00
 layout: post
 slug: beware-of-the-javascript-reference
 title: Beware of the JavaScript reference!
