@@ -11,3 +11,16 @@
     }
   }
 }
+
+body {
+  font-family: $sans;
+}
+
+.entry-content {
+  font-weight: 300;
+  font-size: 0.9em;
+}
+
+#{headings()} {
+  font-weight: 400;
+}
