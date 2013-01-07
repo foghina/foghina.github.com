@@ -27,7 +27,7 @@ Being fed up with ZoneMinder, I ditched it and decided to try and hack together
 something of my own. After fiddling for the next half of the day with `ffmpeg`,
 I came up with a viable solution, in bash.
 
-``` bash
+``` bash bashsurv.sh https://gist.github.com/4100939 View Gist
 #!/bin/bash
 
 OUTPUT_DIR="/var/www/bashsurv"
