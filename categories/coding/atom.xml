@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Coding | Code Ramblings]]></title>
   <link href="http://blog.foghina.com/categories/coding/atom.xml" rel="self"/>
   <link href="http://blog.foghina.com/"/>
-  <updated>2013-01-07T12:15:35+02:00</updated>
+  <updated>2013-01-07T12:19:46+02:00</updated>
   <id>http://blog.foghina.com/</id>
   <author>
     <name><![CDATA[Felix Oghină]]></name>
@@ -39,7 +39,7 @@ either.</p>
 something of my own. After fiddling for the next half of the day with <code>ffmpeg</code>,
 I came up with a viable solution, in bash.</p>
 
-<p>``` bash</p>
+<p>``` bash bashsurv.sh https://gist.github.com/4100939 View Gist</p>
 
 <h1>!/bin/bash</h1>
 
