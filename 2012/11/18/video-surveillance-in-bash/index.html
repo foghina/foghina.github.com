@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Beware of the JavaScript reference! - Code Ramblings</title>
+  <title>Video Surveillance... in Bash - Code Ramblings</title>
   <meta name="author" content="Felix Oghină">
 
   
-  <meta name="description" content="As you (hopefully) know, variables in JavaScript are actually references. As you (most surely) know, references can bite you in the ass in the most &hellip;">
+  <meta name="description" content="My parents recently asked me to install an IP video surveillance camera at their
+house (for reasons). Since I already have a Linux server there &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.foghina.com/2012/04/22/beware-of-the-javascript-reference/">
+  <link rel="canonical" href="http://blog.foghina.com/2012/11/18/video-surveillance-in-bash/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -79,7 +80,7 @@
   
   <header>
     
-      <h1 class="entry-title">Beware of the JavaScript reference!</h1>
+      <h1 class="entry-title">Video Surveillance... in Bash</h1>
     
     
       <p class="meta">
@@ -95,29 +96,75 @@
   
 
 
-<time datetime="2012-04-22T15:00:00+03:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2012</time>
+<time datetime="2012-11-18T00:47:00+02:00" pubdate data-updated="true">Nov 18<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>As you (hopefully) know, variables in JavaScript are actually references. As you (most surely) know, references can bite you in the ass in the most unexpected places, so here&#8217;s one of them. Say you have an object that you continuously change (e.g. recursively) and want to see how it &#8220;evolves&#8221; by calling console.log() on it. You would expect to see &#8220;snapshots&#8221; of the object logged, right? Wrong. For example, try running this code in a console (<strong>Note:</strong> I have only tried this in Chrome, not sure how other browsers behave):</p>
+<div class="entry-content"><p>My parents recently asked me to install an IP video surveillance camera at their
+house (for reasons). Since I already have a Linux server there running 24/7, it
+was only natural that I somehow set it up to record the camera&#8217;s video feed (mp4
+over RTSP). After a bit of googling I found <a href="http://www.zoneminder.com/">ZoneMinder</a>, which looked like
+it did everything I needed. However, after wasting half a day fiddling with it,
+I realized that it is, although very complex and feature-rich, not up to my
+needs: no matter how you configure it, it will convert the video feed into
+thousands of JPEG files and store them randomly on the filesystem. It also uses
+a MySQL database to store its information (so extra dependencies), viewing the
+camera live is very slow (refreshes a static image every 4-5 seconds), replaying
+a recording needs the Java plug-in in your browser (which I don&#8217;t have on
+Ubuntu) and you have to &#8220;export&#8221; a movie clip (i.e. it has to convert all the
+images it saved back to a video). What a waste, but I can see how this solution
+could be the most compatible with all possible environments (camera types, OSes,
+etcetera). I was unable to set up authentication or a maximum total file size,
+either.</p>
+
+<p>Being fed up with ZoneMinder, I ditched it and decided to try and hack together
+something of my own. After fiddling for the next half of the day with <code>ffmpeg</code>,
+I came up with a viable solution, in bash.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">mutant</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;Leela Turanga&quot;</span><span class="p">};</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">mutant</span><span class="p">);</span>
-</span><span class='line'><span class="nx">mutant</span><span class="p">[</span><span class="s2">&quot;characteristic&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;One eye&quot;</span><span class="p">;</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">OUTPUT_DIR</span><span class="o">=</span><span class="s2">&quot;/var/www/bashsurv&quot;</span>
+</span><span class='line'><span class="nv">FFMPEG_INPUT_FLAGS</span><span class="o">=</span><span class="s2">&quot;-rtsp_transport udp&quot;</span>
+</span><span class='line'><span class="nv">FFMPEG_SOURCE</span><span class="o">=</span><span class="s2">&quot;rtsp://192.168.1.123/video.mp4&quot;</span>
+</span><span class='line'><span class="nv">FFMPEG_OUTPUT_FLAGS</span><span class="o">=</span><span class="s2">&quot;-r 20 -acodec libspeex&quot;</span>
+</span><span class='line'><span class="nv">FFMPEG_OUTPUT_EXT</span><span class="o">=</span><span class="s2">&quot;ogv&quot;</span>
+</span><span class='line'><span class="nv">CLIP_LENGTH</span><span class="o">=</span>60 <span class="c"># seconds</span>
+</span><span class='line'><span class="nv">KEEP_FILES_FOR</span><span class="o">=</span>5 <span class="c"># minutes</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">while</span> <span class="o">[</span> <span class="nb">true</span> <span class="o">]</span>; <span class="k">do</span>
+</span><span class='line'><span class="k">  </span>ffmpeg -t <span class="nv">$CLIP_LENGTH</span> <span class="nv">$FFMPEG_INPUT_FLAGS</span> -i <span class="nv">$FFMPEG_SOURCE</span> <span class="se">\</span>
+</span><span class='line'>    <span class="nv">$FFMPEG_OUTPUT_FLAGS</span> <span class="nv">$OUTPUT_DIR</span>/<span class="k">$(</span>date +%F.%T<span class="k">)</span>.<span class="nv">$FFMPEG_OUTPUT_EXT</span>
+</span><span class='line'>  find <span class="nv">$OUTPUT_DIR</span>/ -type f -mmin +<span class="nv">$KEEP_FILES_FOR</span> -delete
+</span><span class='line'><span class="k">done</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Now, expand the Object and voilà, you&#8217;ll see both properties. This can be very confusing with more complicated objects. If you&#8217;re too lazy to run that code, here&#8217;s proof:</p>
+<p>Unfortunately, I was not able to just copy the codec, which would have been
+optimal in terms of resource (CPU/memory) usage on my server, but it doesn&#8217;t
+use up <em>that</em> much. Now I can set <code>OUTPUT_DIR</code> to somewhere in my <code>/var/www</code>,
+set up authentication on it via <code>.htaccess</code> and be done with it. Dad can now
+easily view the recordings using his browser, and if he really needs to view the
+live stream I can just bookmark the RTSP stream in VLC for him or something.</p>
 
-<p><img src="/images/posts/javascript-reference.png" title="Screenshot of Chrome console" ></p>
-
-<p>As a solution, you can clone the object before logging it. <a href="http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-a-javascript-object">Here</a> are a few suggestions for how to do that.</p>
+<p>Bottom line: K.I.S.S.</p>
 </div>
 
 
@@ -140,12 +187,12 @@
   
 
 
-<time datetime="2012-04-22T15:00:00+03:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2012</time>
+<time datetime="2012-11-18T00:47:00+02:00" pubdate data-updated="true">Nov 18<span>th</span>, 2012</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/categories/coding/'>Coding</a>
+    <a class='category' href='/categories/-nix/'>*nix</a>, <a class='category' href='/categories/coding/'>Coding</a>, <a class='category' href='/categories/shell/'>Shell</a>
   
 </span>
 
@@ -155,7 +202,7 @@
       <div class="sharing">
   <script type="text/javascript" src="http://www.reddit.com/static/button/button3.js"></script>
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.foghina.com/2012/04/22/beware-of-the-javascript-reference/" data-via="" data-counturl="http://blog.foghina.com/2012/04/22/beware-of-the-javascript-reference/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.foghina.com/2012/11/18/video-surveillance-in-bash/" data-via="" data-counturl="http://blog.foghina.com/2012/11/18/video-surveillance-in-bash/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -166,10 +213,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/2012/04/17/rails-setup-with-rvm-on-ubuntu/" title="Previous Post: Rails setup with RVM on Ubuntu">&laquo; Rails setup with RVM on Ubuntu</a>
+        <a class="basic-alignment left" href="/2012/10/04/how-to-fuck-up-with-find/" title="Previous Post: How to fuck up with find">&laquo; How to fuck up with find</a>
       
-      
-        <a class="basic-alignment right" href="/2012/10/04/how-to-fuck-up-with-find/" title="Next Post: How to fuck up with find">How to fuck up with find &raquo;</a>
       
     </p>
   </footer>
@@ -241,8 +286,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://blog.foghina.com/2012/04/22/beware-of-the-javascript-reference/';
-        var disqus_url = 'http://blog.foghina.com/2012/04/22/beware-of-the-javascript-reference/';
+        var disqus_identifier = 'http://blog.foghina.com/2012/11/18/video-surveillance-in-bash/';
+        var disqus_url = 'http://blog.foghina.com/2012/11/18/video-surveillance-in-bash/';
         var disqus_script = 'embed.js';
       
     (function () {

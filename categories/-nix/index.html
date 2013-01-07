@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Beware of the JavaScript reference! - Code Ramblings</title>
+  <title>Category: *nix - Code Ramblings</title>
   <meta name="author" content="Felix Oghină">
 
   
-  <meta name="description" content="As you (hopefully) know, variables in JavaScript are actually references. As you (most surely) know, references can bite you in the ass in the most &hellip;">
+  <meta name="description" content="Category: *nix">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.foghina.com/2012/04/22/beware-of-the-javascript-reference/">
+  <link rel="canonical" href="http://blog.foghina.comcategories/-nix/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -75,111 +75,50 @@
   <div id="main">
     <div id="content">
       <div>
-<article class="hentry" role="article">
+<article role="article">
   
   <header>
-    
-      <h1 class="entry-title">Beware of the JavaScript reference!</h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-04-22T15:00:00+03:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2012</time>
-        
-      </p>
+    <h1 class="entry-title">Category: *nix</h1>
     
   </header>
-
-
-<div class="entry-content"><p>As you (hopefully) know, variables in JavaScript are actually references. As you (most surely) know, references can bite you in the ass in the most unexpected places, so here&#8217;s one of them. Say you have an object that you continuously change (e.g. recursively) and want to see how it &#8220;evolves&#8221; by calling console.log() on it. You would expect to see &#8220;snapshots&#8221; of the object logged, right? Wrong. For example, try running this code in a console (<strong>Note:</strong> I have only tried this in Chrome, not sure how other browsers behave):</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">mutant</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;Leela Turanga&quot;</span><span class="p">};</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">mutant</span><span class="p">);</span>
-</span><span class='line'><span class="nx">mutant</span><span class="p">[</span><span class="s2">&quot;characteristic&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;One eye&quot;</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now, expand the Object and voilà, you&#8217;ll see both properties. This can be very confusing with more complicated objects. If you&#8217;re too lazy to run that code, here&#8217;s proof:</p>
-
-<p><img src="/images/posts/javascript-reference.png" title="Screenshot of Chrome console" ></p>
-
-<p>As a solution, you can clone the object before logging it. <a href="http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-a-javascript-object">Here</a> are a few suggestions for how to do that.</p>
-</div>
-
-
-  <footer>
-    <p class="meta">
-      
   
-
-<span class="byline author vcard">Posted by <span class="fn">Felix Oghină</span></span>
-
-      
-
-
-
-
-
+  <div id="blog-archives" class="category">
 
 
 
   
+  <h2>2012</h2>
+
+<article>
+  
+<h1><a href="/2012/11/18/video-surveillance-in-bash/">Video Surveillance... in Bash</a></h1>
+<time datetime="2012-11-18T00:47:00+02:00" pubdate><span class='month'>Nov</span> <span class='day'>18</span> <span class='year'>2012</span></time>
+
+<footer>
+  <span class="categories">posted in <a class='category' href='/categories/-nix/'>*nix</a>, <a class='category' href='/categories/coding/'>Coding</a>, <a class='category' href='/categories/shell/'>Shell</a></span>
+</footer>
 
 
-<time datetime="2012-04-22T15:00:00+03:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2012</time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/categories/coding/'>Coding</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  <script type="text/javascript" src="http://www.reddit.com/static/button/button3.js"></script>
-  
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.foghina.com/2012/04/22/beware-of-the-javascript-reference/" data-via="" data-counturl="http://blog.foghina.com/2012/04/22/beware-of-the-javascript-reference/" >Tweet</a>
-  
-  
-  <div class="g-plusone" data-size="medium"></div>
-  
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/2012/04/17/rails-setup-with-rvm-on-ubuntu/" title="Previous Post: Rails setup with RVM on Ubuntu">&laquo; Rails setup with RVM on Ubuntu</a>
-      
-      
-        <a class="basic-alignment right" href="/2012/10/04/how-to-fuck-up-with-find/" title="Next Post: How to fuck up with find">How to fuck up with find &raquo;</a>
-      
-    </p>
-  </footer>
 </article>
 
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+<article>
+  
+<h1><a href="/2012/10/04/how-to-fuck-up-with-find/">How to fuck up with find</a></h1>
+<time datetime="2012-10-04T20:32:00+03:00" pubdate><span class='month'>Oct</span> <span class='day'>04</span> <span class='year'>2012</span></time>
+
+<footer>
+  <span class="categories">posted in <a class='category' href='/categories/-nix/'>*nix</a>, <a class='category' href='/categories/shell/'>Shell</a></span>
+</footer>
+
+
+</article>
+
 </div>
-  </section>
+
+  
+</article>
 
 </div>
 
@@ -240,10 +179,7 @@
       var disqus_shortname = 'coderamblings';
       
         
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://blog.foghina.com/2012/04/22/beware-of-the-javascript-reference/';
-        var disqus_url = 'http://blog.foghina.com/2012/04/22/beware-of-the-javascript-reference/';
-        var disqus_script = 'embed.js';
+        var disqus_script = 'count.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

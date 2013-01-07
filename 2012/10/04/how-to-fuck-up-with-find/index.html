@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Beware of the JavaScript reference! - Code Ramblings</title>
+  <title>How to fuck up with find - Code Ramblings</title>
   <meta name="author" content="Felix Oghină">
 
   
-  <meta name="description" content="As you (hopefully) know, variables in JavaScript are actually references. As you (most surely) know, references can bite you in the ass in the most &hellip;">
+  <meta name="description" content="Welcome to the tutorial on how to successfully fuck up with find, the command line tool. In case you&#8217;re not familiar with the find command, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://blog.foghina.com/2012/04/22/beware-of-the-javascript-reference/">
+  <link rel="canonical" href="http://blog.foghina.com/2012/10/04/how-to-fuck-up-with-find/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -79,7 +79,7 @@
   
   <header>
     
-      <h1 class="entry-title">Beware of the JavaScript reference!</h1>
+      <h1 class="entry-title">How to fuck up with find</h1>
     
     
       <p class="meta">
@@ -95,29 +95,41 @@
   
 
 
-<time datetime="2012-04-22T15:00:00+03:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2012</time>
+<time datetime="2012-10-04T20:32:00+03:00" pubdate data-updated="true">Oct 4<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>As you (hopefully) know, variables in JavaScript are actually references. As you (most surely) know, references can bite you in the ass in the most unexpected places, so here&#8217;s one of them. Say you have an object that you continuously change (e.g. recursively) and want to see how it &#8220;evolves&#8221; by calling console.log() on it. You would expect to see &#8220;snapshots&#8221; of the object logged, right? Wrong. For example, try running this code in a console (<strong>Note:</strong> I have only tried this in Chrome, not sure how other browsers behave):</p>
+<div class="entry-content"><p>Welcome to the tutorial on how to successfully fuck up with <code>find</code>, the command line tool. In case you&#8217;re not familiar with the <code>find</code> command, <a href="http://linux.die.net/man/1/find">RTFM</a>, it&#8217;s freaking beautiful. However, in the hands of a non-RTFM-ing user (like me) it can be quite destructive. Let me demonstrate.</p>
+
+<p>I wanted to use <code>find</code> to delete a bunch of files from a hierarchy, based on a simple name rule. So I thought I should use <a href="http://linux.die.net/man/1/xargs"><code>xargs</code></a> in combination with <code>find</code> to delete them. After a quick lookup of the <code>-print0</code> and <code>-name</code> arguments of the <code>find</code> command, I concluded that it would be a good idea to run the following command:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">mutant</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;Leela Turanga&quot;</span><span class="p">};</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">mutant</span><span class="p">);</span>
-</span><span class='line'><span class="nx">mutant</span><span class="p">[</span><span class="s2">&quot;characteristic&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;One eye&quot;</span><span class="p">;</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">$</span> find . -print0 -name example | xargs -0 rm
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Now, expand the Object and voilà, you&#8217;ll see both properties. This can be very confusing with more complicated objects. If you&#8217;re too lazy to run that code, here&#8217;s proof:</p>
+<p>Can you guess what it did? Let me help you: it deleted all the files under <code>.</code>. The directories are still there, but they&#8217;re not any help, are they? Now, fortunately for me, this was in a git repository that I had just pushed to a remote, so I was able to just clone it again.</p>
 
-<p><img src="/images/posts/javascript-reference.png" title="Screenshot of Chrome console" ></p>
+<p>In order to understand what happened, I had to actually read the man page carefully and pay attention. Apparently, everything that comes after the path (in my case <code>.</code>) on the command line is treated as an expression by <code>find</code>, where every argument evaluates to true or false, and is ORed with the next one. The <code>-print0</code> argument always returns true, because it&#8217;s only meant to change the output, not the actual filtering. Because of this, my <code>-name</code> argument was completely ignored.</p>
 
-<p>As a solution, you can clone the object before logging it. <a href="http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-a-javascript-object">Here</a> are a few suggestions for how to do that.</p>
+<p>To conclude, the correct command would have been:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">$</span> find . -name example -print0 | xargs -0 rm
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This way, the <code>-name</code> argument will take precedence over <code>print0</code>. However, because I actually spent time reading the manual this time, I discovered <code>find</code> also has a <code>-delete</code> argument, so <code>xargs</code> is not actually needed at all:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">$</span> find . -name example -delete
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As I was saying, freaking beautiful.</p>
 </div>
 
 
@@ -140,12 +152,12 @@
   
 
 
-<time datetime="2012-04-22T15:00:00+03:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2012</time>
+<time datetime="2012-10-04T20:32:00+03:00" pubdate data-updated="true">Oct 4<span>th</span>, 2012</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/categories/coding/'>Coding</a>
+    <a class='category' href='/categories/-nix/'>*nix</a>, <a class='category' href='/categories/shell/'>Shell</a>
   
 </span>
 
@@ -155,7 +167,7 @@
       <div class="sharing">
   <script type="text/javascript" src="http://www.reddit.com/static/button/button3.js"></script>
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.foghina.com/2012/04/22/beware-of-the-javascript-reference/" data-via="" data-counturl="http://blog.foghina.com/2012/04/22/beware-of-the-javascript-reference/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.foghina.com/2012/10/04/how-to-fuck-up-with-find/" data-via="" data-counturl="http://blog.foghina.com/2012/10/04/how-to-fuck-up-with-find/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -166,10 +178,10 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/2012/04/17/rails-setup-with-rvm-on-ubuntu/" title="Previous Post: Rails setup with RVM on Ubuntu">&laquo; Rails setup with RVM on Ubuntu</a>
+        <a class="basic-alignment left" href="/2012/04/22/beware-of-the-javascript-reference/" title="Previous Post: Beware of the JavaScript reference!">&laquo; Beware of the JavaScript reference!</a>
       
       
-        <a class="basic-alignment right" href="/2012/10/04/how-to-fuck-up-with-find/" title="Next Post: How to fuck up with find">How to fuck up with find &raquo;</a>
+        <a class="basic-alignment right" href="/2012/11/18/video-surveillance-in-bash/" title="Next Post: Video Surveillance... in Bash">Video Surveillance... in Bash &raquo;</a>
       
     </p>
   </footer>
@@ -241,8 +253,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://blog.foghina.com/2012/04/22/beware-of-the-javascript-reference/';
-        var disqus_url = 'http://blog.foghina.com/2012/04/22/beware-of-the-javascript-reference/';
+        var disqus_identifier = 'http://blog.foghina.com/2012/10/04/how-to-fuck-up-with-find/';
+        var disqus_url = 'http://blog.foghina.com/2012/10/04/how-to-fuck-up-with-find/';
         var disqus_script = 'embed.js';
       
     (function () {
