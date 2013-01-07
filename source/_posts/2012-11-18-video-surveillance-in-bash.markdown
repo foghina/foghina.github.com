@@ -27,7 +27,23 @@ Being fed up with ZoneMinder, I ditched it and decided to try and hack together
 something of my own. After fiddling for the next half of the day with `ffmpeg`,
 I came up with a viable solution, in bash.
 
-{% gist 4100939 %}
+``` bash
+#!/bin/bash
+
+OUTPUT_DIR="/var/www/bashsurv"
+FFMPEG_INPUT_FLAGS="-rtsp_transport udp"
+FFMPEG_SOURCE="rtsp://192.168.1.123/video.mp4"
+FFMPEG_OUTPUT_FLAGS="-r 20 -acodec libspeex"
+FFMPEG_OUTPUT_EXT="ogv"
+CLIP_LENGTH=60 # seconds
+KEEP_FILES_FOR=5 # minutes
+
+while [ true ]; do
+  ffmpeg -t $CLIP_LENGTH $FFMPEG_INPUT_FLAGS -i $FFMPEG_SOURCE \
+    $FFMPEG_OUTPUT_FLAGS $OUTPUT_DIR/$(date +%F.%T).$FFMPEG_OUTPUT_EXT
+  find $OUTPUT_DIR/ -type f -mmin +$KEEP_FILES_FOR -delete
+done
+```
 
 Unfortunately, I was not able to just copy the codec, which would have been
 optimal in terms of resource (CPU/memory) usage on my server, but it doesn't
