@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Coding | Code Ramblings]]></title>
   <link href="http://blog.foghina.com/categories/coding/atom.xml" rel="self"/>
   <link href="http://blog.foghina.com/"/>
-  <updated>2013-01-15T18:46:39+02:00</updated>
+  <updated>2013-01-15T18:58:38+02:00</updated>
   <id>http://blog.foghina.com/</id>
   <author>
     <name><![CDATA[Felix Oghină]]></name>
@@ -96,7 +96,7 @@ mutant["characteristic"] = "One eye";
   <entry>
     <title type="html"><![CDATA[Rails setup with RVM on Ubuntu]]></title>
     <link href="http://blog.foghina.com/2012/04/17/rails-setup-with-rvm-on-ubuntu/"/>
-    <updated>2012-04-17T03:39:45+03:00</updated>
+    <updated>2012-04-17T03:39:46+03:00</updated>
     <id>http://blog.foghina.com/2012/04/17/rails-setup-with-rvm-on-ubuntu</id>
     <content type="html"><![CDATA[<p>Given how developer friendly as Ruby on Rails is, getting a development environment up and running can be surprisingly tricky. I will describe the process that I consider to be "best practice" here, step by step. Although my guide will be focused on Ubuntu, the general idea should be the same on other distros as well. Also, please take note of the date of this post. If you're reading this even a few months after I wrote this, don't be surprised if your mileage will vary.</p>
 
