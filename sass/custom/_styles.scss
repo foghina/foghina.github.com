@@ -24,3 +24,8 @@ body {
 #{headings()} {
   font-weight: 400;
 }
+
+aside.sidebar .stackoverflow a {
+  text-decoration: none;
+  white-space: normal;
+}
