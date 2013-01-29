@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: http://blog.foghina.com/sitemap.xml 
+Sitemap: http://felix.oghina.com/sitemap.xml 

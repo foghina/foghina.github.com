@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Code Ramblings]]></title>
-  <link href="http://blog.foghina.com/atom.xml" rel="self"/>
-  <link href="http://blog.foghina.com/"/>
-  <updated>2013-01-25T15:24:54+02:00</updated>
-  <id>http://blog.foghina.com/</id>
+  <link href="http://felix.oghina.com/atom.xml" rel="self"/>
+  <link href="http://felix.oghina.com/"/>
+  <updated>2013-01-29T11:03:12+02:00</updated>
+  <id>http://felix.oghina.com/</id>
   <author>
     <name><![CDATA[Felix Oghină]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Video Surveillance... in Bash]]></title>
-    <link href="http://blog.foghina.com/2012/11/18/video-surveillance-in-bash/"/>
+    <link href="http://felix.oghina.com/2012/11/18/video-surveillance-in-bash/"/>
     <updated>2012-11-18T00:47:00+02:00</updated>
-    <id>http://blog.foghina.com/2012/11/18/video-surveillance-in-bash</id>
+    <id>http://felix.oghina.com/2012/11/18/video-surveillance-in-bash</id>
     <content type="html"><![CDATA[<p>My parents recently asked me to install an IP video surveillance camera at their
 house (for reasons). Since I already have a Linux server there running 24/7, it
 was only natural that I somehow set it up to record the camera&#8217;s video feed (mp4
@@ -85,9 +85,9 @@ live stream I can just bookmark the RTSP stream in VLC for him or something.</p>
   
   <entry>
     <title type="html"><![CDATA[How to fuck up with find]]></title>
-    <link href="http://blog.foghina.com/2012/10/04/how-to-fuck-up-with-find/"/>
+    <link href="http://felix.oghina.com/2012/10/04/how-to-fuck-up-with-find/"/>
     <updated>2012-10-04T20:32:00+03:00</updated>
-    <id>http://blog.foghina.com/2012/10/04/how-to-fuck-up-with-find</id>
+    <id>http://felix.oghina.com/2012/10/04/how-to-fuck-up-with-find</id>
     <content type="html"><![CDATA[<p>Welcome to the tutorial on how to successfully fuck up with <code>find</code>, the command line tool. In case you&#8217;re not familiar with the <code>find</code> command, <a href="http://linux.die.net/man/1/find">RTFM</a>, it&#8217;s freaking beautiful. However, in the hands of a non-RTFM-ing user (like me) it can be quite destructive. Let me demonstrate.</p>
 
 <p>I wanted to use <code>find</code> to delete a bunch of files from a hierarchy, based on a simple name rule. So I thought I should use <a href="http://linux.die.net/man/1/xargs"><code>xargs</code></a> in combination with <code>find</code> to delete them. After a quick lookup of the <code>-print0</code> and <code>-name</code> arguments of the <code>find</code> command, I concluded that it would be a good idea to run the following command:</p>
@@ -121,9 +121,9 @@ live stream I can just bookmark the RTSP stream in VLC for him or something.</p>
   
   <entry>
     <title type="html"><![CDATA[Beware of the JavaScript reference!]]></title>
-    <link href="http://blog.foghina.com/2012/04/22/beware-of-the-javascript-reference/"/>
+    <link href="http://felix.oghina.com/2012/04/22/beware-of-the-javascript-reference/"/>
     <updated>2012-04-22T15:00:00+03:00</updated>
-    <id>http://blog.foghina.com/2012/04/22/beware-of-the-javascript-reference</id>
+    <id>http://felix.oghina.com/2012/04/22/beware-of-the-javascript-reference</id>
     <content type="html"><![CDATA[<p>As you (hopefully) know, variables in JavaScript are actually references. As you (most surely) know, references can bite you in the ass in the most unexpected places, so here&#8217;s one of them. Say you have an object that you continuously change (e.g. recursively) and want to see how it &#8220;evolves&#8221; by calling console.log() on it. You would expect to see &#8220;snapshots&#8221; of the object logged, right? Wrong. For example, try running this code in a console (<strong>Note:</strong> I have only tried this in Chrome, not sure how other browsers behave):</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -137,7 +137,7 @@ live stream I can just bookmark the RTSP stream in VLC for him or something.</p>
 
 <p>Now, expand the Object and voilà, you&#8217;ll see both properties. This can be very confusing with more complicated objects. If you&#8217;re too lazy to run that code, here&#8217;s proof:</p>
 
-<p><img src="http://blog.foghina.com/images/posts/javascript-reference.png" title="Screenshot of Chrome console" ></p>
+<p><img src="http://felix.oghina.com/images/posts/javascript-reference.png" title="Screenshot of Chrome console" ></p>
 
 <p>As a solution, you can clone the object before logging it. <a href="http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-a-javascript-object">Here</a> are a few suggestions for how to do that.</p>
 ]]></content>
@@ -145,9 +145,9 @@ live stream I can just bookmark the RTSP stream in VLC for him or something.</p>
   
   <entry>
     <title type="html"><![CDATA[Rails setup with RVM on Ubuntu]]></title>
-    <link href="http://blog.foghina.com/2012/04/17/rails-setup-with-rvm-on-ubuntu/"/>
+    <link href="http://felix.oghina.com/2012/04/17/rails-setup-with-rvm-on-ubuntu/"/>
     <updated>2012-04-17T03:39:45+03:00</updated>
-    <id>http://blog.foghina.com/2012/04/17/rails-setup-with-rvm-on-ubuntu</id>
+    <id>http://felix.oghina.com/2012/04/17/rails-setup-with-rvm-on-ubuntu</id>
     <content type="html"><![CDATA[<p>Given how developer friendly as Ruby on Rails is, getting a development environment up and running can be surprisingly tricky. I will describe the process that I consider to be &#8220;best practice&#8221; here, step by step. Although my guide will be focused on Ubuntu, the general idea should be the same on other distros as well. Also, please take note of the date of this post. If you&#8217;re reading this even a few months after I wrote this, don&#8217;t be surprised if your mileage will vary.</p>
 
 <p><del>First off, we&#8217;re going to need Ruby, right? So let&#8217;s install that, and also throw in curl (we&#8217;re going to need it in a bit):</del></p>

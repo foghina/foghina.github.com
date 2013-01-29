@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Shell | Code Ramblings]]></title>
-  <link href="http://blog.foghina.com/categories/shell/atom.xml" rel="self"/>
-  <link href="http://blog.foghina.com/"/>
-  <updated>2013-01-25T15:24:54+02:00</updated>
-  <id>http://blog.foghina.com/</id>
+  <link href="http://felix.oghina.com/categories/shell/atom.xml" rel="self"/>
+  <link href="http://felix.oghina.com/"/>
+  <updated>2013-01-29T11:03:12+02:00</updated>
+  <id>http://felix.oghina.com/</id>
   <author>
     <name><![CDATA[Felix Oghină]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Video Surveillance... in Bash]]></title>
-    <link href="http://blog.foghina.com/2012/11/18/video-surveillance-in-bash/"/>
+    <link href="http://felix.oghina.com/2012/11/18/video-surveillance-in-bash/"/>
     <updated>2012-11-18T00:47:00+02:00</updated>
-    <id>http://blog.foghina.com/2012/11/18/video-surveillance-in-bash</id>
+    <id>http://felix.oghina.com/2012/11/18/video-surveillance-in-bash</id>
     <content type="html"><![CDATA[<p>My parents recently asked me to install an IP video surveillance camera at their
 house (for reasons). Since I already have a Linux server there running 24/7, it
 was only natural that I somehow set it up to record the camera's video feed (mp4
@@ -74,9 +74,9 @@ live stream I can just bookmark the RTSP stream in VLC for him or something.</p>
   
   <entry>
     <title type="html"><![CDATA[How to fuck up with find]]></title>
-    <link href="http://blog.foghina.com/2012/10/04/how-to-fuck-up-with-find/"/>
+    <link href="http://felix.oghina.com/2012/10/04/how-to-fuck-up-with-find/"/>
     <updated>2012-10-04T20:32:00+03:00</updated>
-    <id>http://blog.foghina.com/2012/10/04/how-to-fuck-up-with-find</id>
+    <id>http://felix.oghina.com/2012/10/04/how-to-fuck-up-with-find</id>
     <content type="html"><![CDATA[<p>Welcome to the tutorial on how to successfully fuck up with <code>find</code>, the command line tool. In case you're not familiar with the <code>find</code> command, <a href="http://linux.die.net/man/1/find">RTFM</a>, it's freaking beautiful. However, in the hands of a non-RTFM-ing user (like me) it can be quite destructive. Let me demonstrate.</p>
 
 <p>I wanted to use <code>find</code> to delete a bunch of files from a hierarchy, based on a simple name rule. So I thought I should use <a href="http://linux.die.net/man/1/xargs"><code>xargs</code></a> in combination with <code>find</code> to delete them. After a quick lookup of the <code>-print0</code> and <code>-name</code> arguments of the <code>find</code> command, I concluded that it would be a good idea to run the following command:</p>
