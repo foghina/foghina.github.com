@@ -20,13 +20,14 @@ Oct 04 2012 posted in *nix, &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://felix.oghina.com/blog/archives/">
+  <link rel="canonical" href="http://felix.oghina.com/blog/archives">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <link href="/atom.xml" rel="alternate" title="Code Ramblings" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,300,400' rel='stylesheet' type='text/css'>
@@ -97,7 +98,7 @@ Oct 04 2012 posted in *nix, &hellip;">
 <time datetime="2012-11-18T00:47:00+02:00" pubdate><span class='month'>Nov</span> <span class='day'>18</span> <span class='year'>2012</span></time>
 
 <footer>
-  <span class="categories">posted in <a class='category' href='/categories/-nix/'>*nix</a>, <a class='category' href='/categories/coding/'>Coding</a>, <a class='category' href='/categories/shell/'>Shell</a></span>
+  <span class="categories">posted in <a class='category' href='/categories/star-nix/'>*nix</a>, <a class='category' href='/categories/coding/'>Coding</a>, <a class='category' href='/categories/shell/'>Shell</a></span>
 </footer>
 
 
@@ -111,7 +112,7 @@ Oct 04 2012 posted in *nix, &hellip;">
 <time datetime="2012-10-04T20:32:00+03:00" pubdate><span class='month'>Oct</span> <span class='day'>04</span> <span class='year'>2012</span></time>
 
 <footer>
-  <span class="categories">posted in <a class='category' href='/categories/-nix/'>*nix</a>, <a class='category' href='/categories/shell/'>Shell</a></span>
+  <span class="categories">posted in <a class='category' href='/categories/star-nix/'>*nix</a>, <a class='category' href='/categories/shell/'>Shell</a></span>
 </footer>
 
 
@@ -177,6 +178,22 @@ Oct 04 2012 posted in *nix, &hellip;">
   </ul>
 </section>
 
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("foghina", 4, true);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/foghina" class="twitter-follow-button" data-show-count="false">Follow @foghina</a>
+  
+</section>
 
 
 
@@ -244,7 +261,7 @@ Oct 04 2012 posted in *nix, &hellip;">
       var twitterWidgets = document.createElement('script');
       twitterWidgets.type = 'text/javascript';
       twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>

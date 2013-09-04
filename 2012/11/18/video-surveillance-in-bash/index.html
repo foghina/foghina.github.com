@@ -19,13 +19,14 @@ house (for reasons). Since I already have a Linux server there &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://felix.oghina.com/2012/11/18/video-surveillance-in-bash/">
+  <link rel="canonical" href="http://felix.oghina.com/2012/11/18/video-surveillance-in-bash">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <link href="/atom.xml" rel="alternate" title="Code Ramblings" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,300,400' rel='stylesheet' type='text/css'>
@@ -105,7 +106,7 @@ house (for reasons). Since I already have a Linux server there &hellip;">
 
 <div class="entry-content"><p>My parents recently asked me to install an IP video surveillance camera at their
 house (for reasons). Since I already have a Linux server there running 24/7, it
-was only natural that I somehow set it up to record the camera&#8217;s video feed (mp4
+was only natural that I somehow set it up to record the camera&rsquo;s video feed (mp4
 over RTSP). After a bit of googling I found <a href="http://www.zoneminder.com/">ZoneMinder</a>, which looked like
 it did everything I needed. However, after wasting half a day fiddling with it,
 I realized that it is, although very complex and feature-rich, not up to my
@@ -113,8 +114,8 @@ needs: no matter how you configure it, it will convert the video feed into
 thousands of JPEG files and store them randomly on the filesystem. It also uses
 a MySQL database to store its information (so extra dependencies), viewing the
 camera live is very slow (refreshes a static image every 4-5 seconds), replaying
-a recording needs the Java plug-in in your browser (which I don&#8217;t have on
-Ubuntu) and you have to &#8220;export&#8221; a movie clip (i.e. it has to convert all the
+a recording needs the Java plug-in in your browser (which I don&rsquo;t have on
+Ubuntu) and you have to &ldquo;export&rdquo; a movie clip (i.e. it has to convert all the
 images it saved back to a video). What a waste, but I can see how this solution
 could be the most compatible with all possible environments (camera types, OSes,
 etcetera). I was unable to set up authentication or a maximum total file size,
@@ -158,7 +159,7 @@ I came up with a viable solution, in bash.</p>
 
 
 <p>Unfortunately, I was not able to just copy the codec, which would have been
-optimal in terms of resource (CPU/memory) usage on my server, but it doesn&#8217;t
+optimal in terms of resource (CPU/memory) usage on my server, but it doesn&rsquo;t
 use up <em>that</em> much. Now I can set <code>OUTPUT_DIR</code> to somewhere in my <code>/var/www</code>,
 set up authentication on it via <code>.htaccess</code> and be done with it. Dad can now
 easily view the recordings using his browser, and if he really needs to view the
@@ -192,7 +193,7 @@ live stream I can just bookmark the RTSP stream in VLC for him or something.</p>
 
 <span class="categories">
   
-    <a class='category' href='/categories/-nix/'>*nix</a>, <a class='category' href='/categories/coding/'>Coding</a>, <a class='category' href='/categories/shell/'>Shell</a>
+    <a class='category' href='/categories/star-nix/'>*nix</a>, <a class='category' href='/categories/coding/'>Coding</a>, <a class='category' href='/categories/shell/'>Shell</a>
   
 </span>
 
@@ -200,12 +201,9 @@ live stream I can just bookmark the RTSP stream in VLC for him or something.</p>
     </p>
     
       <div class="sharing">
-  <script type="text/javascript">
-    reddit_url = "http://felix.oghina.com/2012/11/18/video-surveillance-in-bash/";
-  </script>
   <script type="text/javascript" src="http://www.reddit.com/static/button/button3.js"></script>
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://felix.oghina.com/2012/11/18/video-surveillance-in-bash/" data-via="" data-counturl="http://felix.oghina.com/2012/11/18/video-surveillance-in-bash/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://felix.oghina.com/2012/11/18/video-surveillance-in-bash/" data-via="foghina" data-counturl="http://felix.oghina.com/2012/11/18/video-surveillance-in-bash/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -256,6 +254,22 @@ live stream I can just bookmark the RTSP stream in VLC for him or something.</p>
   </ul>
 </section>
 
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("foghina", 4, true);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/foghina" class="twitter-follow-button" data-show-count="false">Follow @foghina</a>
+  
+</section>
 
 
 
@@ -326,7 +340,7 @@ live stream I can just bookmark the RTSP stream in VLC for him or something.</p>
       var twitterWidgets = document.createElement('script');
       twitterWidgets.type = 'text/javascript';
       twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>

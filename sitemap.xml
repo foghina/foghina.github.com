@@ -2,30 +2,30 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://felix.oghina.com/2012/04/17/rails-setup-with-rvm-on-ubuntu/</loc>
-        <lastmod>2013-01-25T15:02:31+02:00</lastmod>
+        <lastmod>2013-09-04T19:57:13+03:00</lastmod>
     </url>
     <url>
         <loc>http://felix.oghina.com/2012/04/22/beware-of-the-javascript-reference/</loc>
-        <lastmod>2013-01-25T15:02:31+02:00</lastmod>
+        <lastmod>2013-09-04T19:57:13+03:00</lastmod>
     </url>
     <url>
         <loc>http://felix.oghina.com/2012/10/04/how-to-fuck-up-with-find/</loc>
-        <lastmod>2013-01-25T15:02:31+02:00</lastmod>
+        <lastmod>2013-09-04T19:57:13+03:00</lastmod>
     </url>
     <url>
         <loc>http://felix.oghina.com/2012/11/18/video-surveillance-in-bash/</loc>
-        <lastmod>2013-01-25T15:02:31+02:00</lastmod>
-    </url>
-    <url>
-        <loc>http://felix.oghina.com/</loc>
-        <lastmod>2013-01-25T15:02:31+02:00</lastmod>
+        <lastmod>2013-09-04T19:57:13+03:00</lastmod>
     </url>
     <url>
         <loc>http://felix.oghina.com/blog/archives/</loc>
-        <lastmod>2013-01-25T15:02:31+02:00</lastmod>
+        <lastmod>2013-09-04T19:57:13+03:00</lastmod>
+    </url>
+    <url>
+        <loc>http://felix.oghina.com/</loc>
+        <lastmod>2013-09-04T19:57:13+03:00</lastmod>
     </url>
     <url>
         <loc>http://felix.oghina.com/robots.txt</loc>
-        <lastmod>2013-01-25T15:02:31+02:00</lastmod>
+        <lastmod>2013-09-04T19:57:13+03:00</lastmod>
     </url>
 </urlset>

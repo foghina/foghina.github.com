@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Shell | Code Ramblings]]></title>
   <link href="http://felix.oghina.com/categories/shell/atom.xml" rel="self"/>
   <link href="http://felix.oghina.com/"/>
-  <updated>2013-01-29T11:03:12+02:00</updated>
+  <updated>2013-09-04T20:18:31+03:00</updated>
   <id>http://felix.oghina.com/</id>
   <author>
     <name><![CDATA[Felix Oghină]]></name>
@@ -20,7 +20,7 @@
     <id>http://felix.oghina.com/2012/11/18/video-surveillance-in-bash</id>
     <content type="html"><![CDATA[<p>My parents recently asked me to install an IP video surveillance camera at their
 house (for reasons). Since I already have a Linux server there running 24/7, it
-was only natural that I somehow set it up to record the camera's video feed (mp4
+was only natural that I somehow set it up to record the camera&rsquo;s video feed (mp4
 over RTSP). After a bit of googling I found <a href="http://www.zoneminder.com/">ZoneMinder</a>, which looked like
 it did everything I needed. However, after wasting half a day fiddling with it,
 I realized that it is, although very complex and feature-rich, not up to my
@@ -28,8 +28,8 @@ needs: no matter how you configure it, it will convert the video feed into
 thousands of JPEG files and store them randomly on the filesystem. It also uses
 a MySQL database to store its information (so extra dependencies), viewing the
 camera live is very slow (refreshes a static image every 4-5 seconds), replaying
-a recording needs the Java plug-in in your browser (which I don't have on
-Ubuntu) and you have to "export" a movie clip (i.e. it has to convert all the
+a recording needs the Java plug-in in your browser (which I don&rsquo;t have on
+Ubuntu) and you have to &ldquo;export&rdquo; a movie clip (i.e. it has to convert all the
 images it saved back to a video). What a waste, but I can see how this solution
 could be the most compatible with all possible environments (camera types, OSes,
 etcetera). I was unable to set up authentication or a maximum total file size,
@@ -39,15 +39,15 @@ either.</p>
 something of my own. After fiddling for the next half of the day with <code>ffmpeg</code>,
 I came up with a viable solution, in bash.</p>
 
-<p>``` bash bashsurv.sh https://gist.github.com/4100939 View Gist</p>
+<p>``` bash bashsurv.sh <a href="https://gist.github.com/4100939">https://gist.github.com/4100939</a> View Gist</p>
 
 <h1>!/bin/bash</h1>
 
-<p>OUTPUT_DIR="/var/www/bashsurv"
-FFMPEG_INPUT_FLAGS="-rtsp_transport udp"
-FFMPEG_SOURCE="rtsp://192.168.1.123/video.mp4"
-FFMPEG_OUTPUT_FLAGS="-r 20 -acodec libspeex"
-FFMPEG_OUTPUT_EXT="ogv"
+<p>OUTPUT_DIR=&ldquo;/var/www/bashsurv&rdquo;
+FFMPEG_INPUT_FLAGS=&ldquo;-rtsp_transport udp&rdquo;
+FFMPEG_SOURCE=&ldquo;rtsp://192.168.1.123/video.mp4&rdquo;
+FFMPEG_OUTPUT_FLAGS=&ldquo;-r 20 -acodec libspeex&rdquo;
+FFMPEG_OUTPUT_EXT=&ldquo;ogv&rdquo;
 CLIP_LENGTH=60 # seconds
 KEEP_FILES_FOR=5 # minutes</p>
 
@@ -62,7 +62,7 @@ done
 ```</p>
 
 <p>Unfortunately, I was not able to just copy the codec, which would have been
-optimal in terms of resource (CPU/memory) usage on my server, but it doesn't
+optimal in terms of resource (CPU/memory) usage on my server, but it doesn&rsquo;t
 use up <em>that</em> much. Now I can set <code>OUTPUT_DIR</code> to somewhere in my <code>/var/www</code>,
 set up authentication on it via <code>.htaccess</code> and be done with it. Dad can now
 easily view the recordings using his browser, and if he really needs to view the
@@ -77,7 +77,7 @@ live stream I can just bookmark the RTSP stream in VLC for him or something.</p>
     <link href="http://felix.oghina.com/2012/10/04/how-to-fuck-up-with-find/"/>
     <updated>2012-10-04T20:32:00+03:00</updated>
     <id>http://felix.oghina.com/2012/10/04/how-to-fuck-up-with-find</id>
-    <content type="html"><![CDATA[<p>Welcome to the tutorial on how to successfully fuck up with <code>find</code>, the command line tool. In case you're not familiar with the <code>find</code> command, <a href="http://linux.die.net/man/1/find">RTFM</a>, it's freaking beautiful. However, in the hands of a non-RTFM-ing user (like me) it can be quite destructive. Let me demonstrate.</p>
+    <content type="html"><![CDATA[<p>Welcome to the tutorial on how to successfully fuck up with <code>find</code>, the command line tool. In case you&rsquo;re not familiar with the <code>find</code> command, <a href="http://linux.die.net/man/1/find">RTFM</a>, it&rsquo;s freaking beautiful. However, in the hands of a non-RTFM-ing user (like me) it can be quite destructive. Let me demonstrate.</p>
 
 <p>I wanted to use <code>find</code> to delete a bunch of files from a hierarchy, based on a simple name rule. So I thought I should use <a href="http://linux.die.net/man/1/xargs"><code>xargs</code></a> in combination with <code>find</code> to delete them. After a quick lookup of the <code>-print0</code> and <code>-name</code> arguments of the <code>find</code> command, I concluded that it would be a good idea to run the following command:</p>
 
@@ -85,9 +85,9 @@ live stream I can just bookmark the RTSP stream in VLC for him or something.</p>
 $ find . -print0 -name example | xargs -0 rm
 </code></p>
 
-<p>Can you guess what it did? Let me help you: it deleted all the files under <code>.</code>. The directories are still there, but they're not any help, are they? Now, fortunately for me, this was in a git repository that I had just pushed to a remote, so I was able to just clone it again.</p>
+<p>Can you guess what it did? Let me help you: it deleted all the files under <code>.</code>. The directories are still there, but they&rsquo;re not any help, are they? Now, fortunately for me, this was in a git repository that I had just pushed to a remote, so I was able to just clone it again.</p>
 
-<p>In order to understand what happened, I had to actually read the man page carefully and pay attention. Apparently, everything that comes after the path (in my case <code>.</code>) on the command line is treated as an expression by <code>find</code>, where every argument evaluates to true or false, and is ORed with the next one. The <code>-print0</code> argument always returns true, because it's only meant to change the output, not the actual filtering. Because of this, my <code>-name</code> argument was completely ignored.</p>
+<p>In order to understand what happened, I had to actually read the man page carefully and pay attention. Apparently, everything that comes after the path (in my case <code>.</code>) on the command line is treated as an expression by <code>find</code>, where every argument evaluates to true or false, and is ORed with the next one. The <code>-print0</code> argument always returns true, because it&rsquo;s only meant to change the output, not the actual filtering. Because of this, my <code>-name</code> argument was completely ignored.</p>
 
 <p>To conclude, the correct command would have been:</p>
 
