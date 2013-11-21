@@ -12,19 +12,6 @@
   }
 }
 
-body {
-  font-family: $sans;
-}
-
-.entry-content {
-  font-weight: 300;
-  font-size: 0.9em;
-}
-
-#{headings()} {
-  font-weight: 400;
-}
-
 aside.sidebar .stackoverflow a {
   text-decoration: none;
   white-space: normal;
