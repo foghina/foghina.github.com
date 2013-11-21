@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: home.js</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Source: home.js</h1>
+    
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>/**
+  * Construct a new Home object.
+  *
+  * @class
+  * @param {HTMLElement} element the HTML element in which to insert the rooms
+  *                      and controls for this home.
+  * @param {Object} options basic options for this home. This must include
+  *                 &lt;code>name&lt;/code> and &lt;code>control_endpoint&lt;/code>. Control
+  *                 updates will be POSTed to
+  *                 &lt;code>control_endpoint/control_id&lt;/code>.
+  */
+function Home(element, options) {
+  "use strict";
+  this.options = options;
+  this.rooms = { };
+
+  var home_source = $("#home-template").html();
+  var home_template = Handlebars.compile(home_source);
+  this.root = $(element).append(home_template(options));
+  
+  var room_source = $("#room-template").html();
+  this.room_template = Handlebars.compile(room_source);
+}
+
+Home.controls = { };
+/**
+  * Register a new control type.
+  *
+  * @param {String} type controls of this type will be created using the
+  *                      registered control function.
+  * @param {Class} control the object that will be instantiated for every
+  *                        control of this type. This must have a constructor
+  *                        (which is given a {@link Home} instance and options
+  *                        parameters) and a &lt;code>render&lt;/code> method.
+  */
+Home.register_control = function(type, control) {
+  "use strict";
+  Home.controls[type] = control;
+};
+
+/**
+  * Add a room to this home.
+  * 
+  * @this {Home}
+  * @param {String} id the id of the new room.
+  * @param {Object} room the room to add. This must include a &lt;code>name&lt;/code>
+  *                      and can include a map of &lt;code>controls&lt;/code>. Example:
+  * &lt;pre>&lt;code>
+  * {
+  *   "name": "Bedroom",
+  *   "controls": {
+  *     "bedroom/lights": {"type": "on-off", "name": "Lights", "on": true}
+  *   }
+  * }
+  * &lt;/pre>&lt;/code>
+  * @see Home#add_control
+  */
+Home.prototype.add_room = function(id, room) {
+  "use strict";
+  this.rooms[id] = room;
+
+  room.html = $(this.room_template(room));
+  if (room.controls) {
+    var control_ids = Object.keys(room.controls);
+    for (var i = 0; i &lt; control_ids.length; i ++) {
+      this.add_control(id, control_ids[i], room.controls[control_ids[i]]);
+    }
+  }
+  this.root.append(room.html);
+};
+
+/**
+  * Add a control to a room.
+  *
+  * @param {String} room_id the id of the room in which to add the control. The
+  *                         room has to have been added via {@link #add_room}.
+  * @param {String} control_id the id of the control being added.
+  * @param {Object} control the control to add. Requires a &lt;code>type&lt;/code>
+  *                         that has been registered earlier with
+  *                         {@link Home.register_control} and any other
+  *                         control-specific options. Example:
+  * &lt;pre>&lt;code>
+  * {"type": "on-off", "name": "Lights", "on": true}
+  * &lt;/pre>&lt;/code>
+  */
+Home.prototype.add_control = function(room_id, control_id, control) {
+  "use strict";
+  var room = this.rooms[room_id];
+  if (!room.controls) {
+    room.controls = { };
+  }
+  room.controls[control_id] = control;
+  var controls_container = room.html.find(".controls");
+  if (Home.controls[control.type]) {
+    control.instance = new Home.controls[control.type](this, control_id, control);
+    controls_container.append(control.instance.render());
+  }
+};
+
+(function() {
+  var konami = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+  var sequence = [ ];
+  $(document).on("keyup", function(e) {
+    sequence.push(e.keyCode);
+    for (var i = 0; i &lt; Math.min(konami.length, sequence.length); i ++) {
+      if (konami[i] !== sequence[i]) {
+        sequence = [ ];
+        return;
+      }
+    }
+    if (sequence.length === konami.length) {
+      window.alert("AEM is pretty cool :)");
+      sequence = [ ];
+    }
+  });
+})();</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="Home.html">Home</a></li><li><a href="OnOffControl.html">OnOffControl</a></li><li><a href="PlusMinusControl.html">PlusMinusControl</a></li><li><a href="SliderControl.html">SliderControl</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0</a> on Fri Nov 22 2013 00:15:22 GMT+0200 (EET)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

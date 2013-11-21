@@ -1,0 +1,42 @@
+{
+  "options": {
+    "name": "Homeatron 2000",
+    "control_endpoint": "controls/"
+  },
+  "rooms": {
+    "bedroom": {
+      "name": "Bedroom",
+      "controls": {
+        "bedroom/lights": {"type": "on-off", "name": "Lights", "on": true},
+        "bedroom/dimmer": {
+          "type": "slider",
+          "name": "Dimmer",
+          "min": 0,
+          "max": 100,
+          "value": 75,
+          "step": 1
+        },
+        "bedroom/curtains": {
+          "type": "on-off",
+          "name": "Curtains",
+          "on-label": "Open",
+          "off-label": "Closed"
+        }
+      }
+    },
+    "livingroom": {
+      "name": "Living Room",
+      "controls": {
+        "living/lights": {"type": "on-off", "name": "Lights"},
+        "living/temperature": {
+          "type": "plus-minus",
+          "name": "Temperature",
+          "min_value": 5.0,
+          "step": 0.5,
+          "max_value": 30.0,
+          "current": 20.5
+        }
+      }
+    }
+  }
+}
