@@ -1,0 +1,17 @@
+li.li-onoff {
+  min-height: 50px;
+}
+li.li-onoff > span {
+  display: inline-block;
+  margin-top: 5px;
+}
+li.li-plusminus {
+  min-height: 55px;
+}
+li.li-plusminus > span {
+  display: inline-block;
+  margin-top: 7.5px;
+}
+li.li-plusminus > div.input-group {
+  width: 120px;
+}

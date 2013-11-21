@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Home Automation</title>
+    <!-- Yay, mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Load Bootstrap CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/1.8/css/bootstrap-switch.css">
+    <!-- Load our own CSS -->
+    <link rel="stylesheet" href="css/home-automation.css">
+  </head>
+  <body>
+    <div class="container" id="root"></div>
+
+    <!-- Home template -->
+    <script id="home-template" type="text/x-handlebars-template">
+      <h1>{{ name }}</h1>
+    </script>
+    <!-- Room template -->
+    <script id="room-template" type="text/x-handlebars-template">
+      <div class="panel panel-default">
+        <div class="panel-heading">{{ name }}</div>
+        <ul class="list-group controls"></ul>
+      </div>
+    </script>
+    <!-- On/Off control template -->
+    <script id="control-onoff-template" type="text/x-handlebars-template">
+      <li class="list-group-item li-onoff">
+        <span>{{ name }}</span>
+        <div class="make-switch pull-right"><input type="checkbox"></div>
+      </li>
+    </script>
+    <!-- Plus/Minus control template -->
+    <script id="control-plusminus-template" type="text/x-handlebars-template">
+      <li class="list-group-item li-plusminus">
+        <span>{{ name }}</span>
+        <div class="input-group pull-right">
+          <span class="input-group-btn">
+            <button class="btn btn-default minus" type="button">-</button>
+          </span>
+          <input type="text" class="form-control">
+          <span class="input-group-btn">
+            <button class="btn btn-default plus" type="button">+</button>
+          </span>
+        </div>
+      </li>
+    </script>
+    <!-- Slider control template -->
+    <script id="control-slider-template" type="text/x-handlebars-template">
+      <li class="list-group-item li-slider">
+        {{ name }}
+        <input type="range" class="pull-right" min="{{ min }}" max="{{ max }}" value="{{ value }}" step="{{ step }}">
+      </li>
+    </script>
+
+    <!-- Load jQuery -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <!-- Load Bootstrap JS -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/1.8/js/bootstrap-switch.min.js"></script>
+    <!-- Load Handlebars -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.1.2/handlebars.min.js"></script>
+    <!-- Load our own JS -->
+    <script src="js/home-automation.min.js"></script>
+
+    <!-- Initialize our Home -->
+    <script type="text/javascript">
+      $.get("json/home.json", function(home_data) {
+        if (typeof home_data == "string") {
+          home_data = JSON.parse(home_data);
+        }
+        // yes, we make this global in this demo so that we can fiddle with it
+        // in the javascript console.
+        home = new Homeatron.Home($("#root"), home_data.options);
+        var room_ids = Object.keys(home_data.rooms);
+        for (var i = 0; i < room_ids.length; i++) {
+          home.add_room(room_ids[i], home_data.rooms[room_ids[i]]);
+        }
+      });
+    </script>
+  </body>
+</html>
