@@ -29,18 +29,22 @@ I came up with a viable solution, in bash.
 
 ``` bash bashsurv.sh https://gist.github.com/4100939 View Gist
 #!/bin/bash
-
+ 
 OUTPUT_DIR="/var/www/bashsurv"
-FFMPEG_INPUT_FLAGS="-rtsp_transport udp"
+FFMPEG_INPUT_FLAGS="-rtsp_transport tcp"
 FFMPEG_SOURCE="rtsp://192.168.1.123/video.mp4"
 FFMPEG_OUTPUT_FLAGS="-r 20 -acodec libspeex"
 FFMPEG_OUTPUT_EXT="ogv"
-CLIP_LENGTH=60 # seconds
-KEEP_FILES_FOR=5 # minutes
-
+CLIP_LENGTH=600 # seconds
+TIMELIMIT=620 # seconds, allows for network timeout over CLIP_LENGTH
+KEEP_FILES_FOR=10080 # minutes
+ 
 while [ true ]; do
-  ffmpeg -t $CLIP_LENGTH $FFMPEG_INPUT_FLAGS -i $FFMPEG_SOURCE \
-    $FFMPEG_OUTPUT_FLAGS $OUTPUT_DIR/$(date +%F.%T).$FFMPEG_OUTPUT_EXT
+  avconv -timelimit $TIMELIMIT $FFMPEG_INPUT_FLAGS -i $FFMPEG_SOURCE -t $CLIP_LENGTH $FFMPEG_OUTPUT_FLAGS $OUTPUT_DIR/$(date +%F.%T).$FFMPEG_OUTPUT_EXT 
+  if [ $? -ne 0 ] ;
+  then
+    sleep 1m ;
+  fi
   find $OUTPUT_DIR/ -type f -mmin +$KEEP_FILES_FOR -delete
 done
 ```
