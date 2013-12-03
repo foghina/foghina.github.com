@@ -140,20 +140,28 @@ I came up with a viable solution, in bash.</p>
 <span class='line-number'>13</span>
 <span class='line-number'>14</span>
 <span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
 </span><span class='line'>
 </span><span class='line'><span class="nv">OUTPUT_DIR</span><span class="o">=</span><span class="s2">&quot;/var/www/bashsurv&quot;</span>
-</span><span class='line'><span class="nv">FFMPEG_INPUT_FLAGS</span><span class="o">=</span><span class="s2">&quot;-rtsp_transport udp&quot;</span>
+</span><span class='line'><span class="nv">FFMPEG_INPUT_FLAGS</span><span class="o">=</span><span class="s2">&quot;-rtsp_transport tcp&quot;</span>
 </span><span class='line'><span class="nv">FFMPEG_SOURCE</span><span class="o">=</span><span class="s2">&quot;rtsp://192.168.1.123/video.mp4&quot;</span>
 </span><span class='line'><span class="nv">FFMPEG_OUTPUT_FLAGS</span><span class="o">=</span><span class="s2">&quot;-r 20 -acodec libspeex&quot;</span>
 </span><span class='line'><span class="nv">FFMPEG_OUTPUT_EXT</span><span class="o">=</span><span class="s2">&quot;ogv&quot;</span>
-</span><span class='line'><span class="nv">CLIP_LENGTH</span><span class="o">=</span>60 <span class="c"># seconds</span>
-</span><span class='line'><span class="nv">KEEP_FILES_FOR</span><span class="o">=</span>5 <span class="c"># minutes</span>
+</span><span class='line'><span class="nv">CLIP_LENGTH</span><span class="o">=</span>600 <span class="c"># seconds</span>
+</span><span class='line'><span class="nv">TIMELIMIT</span><span class="o">=</span>620 <span class="c"># seconds, allows for network timeout over CLIP_LENGTH</span>
+</span><span class='line'><span class="nv">KEEP_FILES_FOR</span><span class="o">=</span>10080 <span class="c"># minutes</span>
 </span><span class='line'>
 </span><span class='line'><span class="k">while</span> <span class="o">[</span> <span class="nb">true</span> <span class="o">]</span>; <span class="k">do</span>
-</span><span class='line'><span class="k">  </span>ffmpeg -t <span class="nv">$CLIP_LENGTH</span> <span class="nv">$FFMPEG_INPUT_FLAGS</span> -i <span class="nv">$FFMPEG_SOURCE</span> <span class="se">\</span>
-</span><span class='line'>    <span class="nv">$FFMPEG_OUTPUT_FLAGS</span> <span class="nv">$OUTPUT_DIR</span>/<span class="k">$(</span>date +%F.%T<span class="k">)</span>.<span class="nv">$FFMPEG_OUTPUT_EXT</span>
-</span><span class='line'>  find <span class="nv">$OUTPUT_DIR</span>/ -type f -mmin +<span class="nv">$KEEP_FILES_FOR</span> -delete
+</span><span class='line'><span class="k">  </span>avconv -timelimit <span class="nv">$TIMELIMIT</span> <span class="nv">$FFMPEG_INPUT_FLAGS</span> -i <span class="nv">$FFMPEG_SOURCE</span> -t <span class="nv">$CLIP_LENGTH</span> <span class="nv">$FFMPEG_OUTPUT_FLAGS</span> <span class="nv">$OUTPUT_DIR</span>/<span class="k">$(</span>date +%F.%T<span class="k">)</span>.<span class="nv">$FFMPEG_OUTPUT_EXT</span>
+</span><span class='line'>  <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -ne 0 <span class="o">]</span> ;
+</span><span class='line'>  <span class="k">then</span>
+</span><span class='line'><span class="k">    </span>sleep 1m ;
+</span><span class='line'>  <span class="k">fi</span>
+</span><span class='line'><span class="k">  </span>find <span class="nv">$OUTPUT_DIR</span>/ -type f -mmin +<span class="nv">$KEEP_FILES_FOR</span> -delete
 </span><span class='line'><span class="k">done</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -257,7 +265,7 @@ live stream I can just bookmark the RTSP stream in VLC for him or something.</p>
   
 
 
-<time datetime="2012-04-22T15:00:00+03:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2012</time>
+<time datetime="2012-04-22T12:00:00+03:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2012</time>
         
       </p>
     
@@ -308,7 +316,7 @@ live stream I can just bookmark the RTSP stream in VLC for him or something.</p>
   
 
 
-<time datetime="2012-04-17T03:39:45+03:00" pubdate data-updated="true">Apr 17<span>th</span>, 2012</time>
+<time datetime="2012-04-17T00:39:45+03:00" pubdate data-updated="true">Apr 17<span>th</span>, 2012</time>
         
       </p>
     

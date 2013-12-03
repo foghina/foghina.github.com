@@ -4,7 +4,7 @@
   <title><![CDATA[Code Ramblings]]></title>
   <link href="http://felix.oghina.com/atom.xml" rel="self"/>
   <link href="http://felix.oghina.com/"/>
-  <updated>2013-11-22T02:21:45+02:00</updated>
+  <updated>2013-12-03T14:50:43+02:00</updated>
   <id>http://felix.oghina.com/</id>
   <author>
     <name><![CDATA[Felix Oghină]]></name>
@@ -54,20 +54,28 @@ I came up with a viable solution, in bash.</p>
 <span class='line-number'>13</span>
 <span class='line-number'>14</span>
 <span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
 </span><span class='line'>
 </span><span class='line'><span class="nv">OUTPUT_DIR</span><span class="o">=</span><span class="s2">&quot;/var/www/bashsurv&quot;</span>
-</span><span class='line'><span class="nv">FFMPEG_INPUT_FLAGS</span><span class="o">=</span><span class="s2">&quot;-rtsp_transport udp&quot;</span>
+</span><span class='line'><span class="nv">FFMPEG_INPUT_FLAGS</span><span class="o">=</span><span class="s2">&quot;-rtsp_transport tcp&quot;</span>
 </span><span class='line'><span class="nv">FFMPEG_SOURCE</span><span class="o">=</span><span class="s2">&quot;rtsp://192.168.1.123/video.mp4&quot;</span>
 </span><span class='line'><span class="nv">FFMPEG_OUTPUT_FLAGS</span><span class="o">=</span><span class="s2">&quot;-r 20 -acodec libspeex&quot;</span>
 </span><span class='line'><span class="nv">FFMPEG_OUTPUT_EXT</span><span class="o">=</span><span class="s2">&quot;ogv&quot;</span>
-</span><span class='line'><span class="nv">CLIP_LENGTH</span><span class="o">=</span>60 <span class="c"># seconds</span>
-</span><span class='line'><span class="nv">KEEP_FILES_FOR</span><span class="o">=</span>5 <span class="c"># minutes</span>
+</span><span class='line'><span class="nv">CLIP_LENGTH</span><span class="o">=</span>600 <span class="c"># seconds</span>
+</span><span class='line'><span class="nv">TIMELIMIT</span><span class="o">=</span>620 <span class="c"># seconds, allows for network timeout over CLIP_LENGTH</span>
+</span><span class='line'><span class="nv">KEEP_FILES_FOR</span><span class="o">=</span>10080 <span class="c"># minutes</span>
 </span><span class='line'>
 </span><span class='line'><span class="k">while</span> <span class="o">[</span> <span class="nb">true</span> <span class="o">]</span>; <span class="k">do</span>
-</span><span class='line'><span class="k">  </span>ffmpeg -t <span class="nv">$CLIP_LENGTH</span> <span class="nv">$FFMPEG_INPUT_FLAGS</span> -i <span class="nv">$FFMPEG_SOURCE</span> <span class="se">\</span>
-</span><span class='line'>    <span class="nv">$FFMPEG_OUTPUT_FLAGS</span> <span class="nv">$OUTPUT_DIR</span>/<span class="k">$(</span>date +%F.%T<span class="k">)</span>.<span class="nv">$FFMPEG_OUTPUT_EXT</span>
-</span><span class='line'>  find <span class="nv">$OUTPUT_DIR</span>/ -type f -mmin +<span class="nv">$KEEP_FILES_FOR</span> -delete
+</span><span class='line'><span class="k">  </span>avconv -timelimit <span class="nv">$TIMELIMIT</span> <span class="nv">$FFMPEG_INPUT_FLAGS</span> -i <span class="nv">$FFMPEG_SOURCE</span> -t <span class="nv">$CLIP_LENGTH</span> <span class="nv">$FFMPEG_OUTPUT_FLAGS</span> <span class="nv">$OUTPUT_DIR</span>/<span class="k">$(</span>date +%F.%T<span class="k">)</span>.<span class="nv">$FFMPEG_OUTPUT_EXT</span>
+</span><span class='line'>  <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -ne 0 <span class="o">]</span> ;
+</span><span class='line'>  <span class="k">then</span>
+</span><span class='line'><span class="k">    </span>sleep 1m ;
+</span><span class='line'>  <span class="k">fi</span>
+</span><span class='line'><span class="k">  </span>find <span class="nv">$OUTPUT_DIR</span>/ -type f -mmin +<span class="nv">$KEEP_FILES_FOR</span> -delete
 </span><span class='line'><span class="k">done</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -122,7 +130,7 @@ live stream I can just bookmark the RTSP stream in VLC for him or something.</p>
   <entry>
     <title type="html"><![CDATA[Beware of the JavaScript reference!]]></title>
     <link href="http://felix.oghina.com/2012/04/22/beware-of-the-javascript-reference/"/>
-    <updated>2012-04-22T15:00:00+03:00</updated>
+    <updated>2012-04-22T12:00:00+03:00</updated>
     <id>http://felix.oghina.com/2012/04/22/beware-of-the-javascript-reference</id>
     <content type="html"><![CDATA[<p>As you (hopefully) know, variables in JavaScript are actually references. As you (most surely) know, references can bite you in the ass in the most unexpected places, so here&rsquo;s one of them. Say you have an object that you continuously change (e.g. recursively) and want to see how it &ldquo;evolves&rdquo; by calling console.log() on it. You would expect to see &ldquo;snapshots&rdquo; of the object logged, right? Wrong. For example, try running this code in a console (<strong>Note:</strong> I have only tried this in Chrome, not sure how other browsers behave):</p>
 
@@ -146,7 +154,7 @@ live stream I can just bookmark the RTSP stream in VLC for him or something.</p>
   <entry>
     <title type="html"><![CDATA[Rails setup with RVM on Ubuntu]]></title>
     <link href="http://felix.oghina.com/2012/04/17/rails-setup-with-rvm-on-ubuntu/"/>
-    <updated>2012-04-17T03:39:45+03:00</updated>
+    <updated>2012-04-17T00:39:45+03:00</updated>
     <id>http://felix.oghina.com/2012/04/17/rails-setup-with-rvm-on-ubuntu</id>
     <content type="html"><![CDATA[<p>Given how developer friendly as Ruby on Rails is, getting a development environment up and running can be surprisingly tricky. I will describe the process that I consider to be &ldquo;best practice&#8221; here, step by step. Although my guide will be focused on Ubuntu, the general idea should be the same on other distros as well. Also, please take note of the date of this post. If you&rsquo;re reading this even a few months after I wrote this, don&rsquo;t be surprised if your mileage will vary.</p>
 

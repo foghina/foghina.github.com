@@ -4,7 +4,7 @@
   <title><![CDATA[Category: *nix | Code Ramblings]]></title>
   <link href="http://felix.oghina.com/categories/star-nix/atom.xml" rel="self"/>
   <link href="http://felix.oghina.com/"/>
-  <updated>2013-11-22T02:21:45+02:00</updated>
+  <updated>2013-12-03T14:50:43+02:00</updated>
   <id>http://felix.oghina.com/</id>
   <author>
     <name><![CDATA[Felix Oghină]]></name>
@@ -44,20 +44,24 @@ I came up with a viable solution, in bash.</p>
 <h1>!/bin/bash</h1>
 
 <p>OUTPUT_DIR=&ldquo;/var/www/bashsurv&rdquo;
-FFMPEG_INPUT_FLAGS=&ldquo;-rtsp_transport udp&rdquo;
+FFMPEG_INPUT_FLAGS=&ldquo;-rtsp_transport tcp&rdquo;
 FFMPEG_SOURCE=&ldquo;rtsp://192.168.1.123/video.mp4&rdquo;
 FFMPEG_OUTPUT_FLAGS=&ldquo;-r 20 -acodec libspeex&rdquo;
 FFMPEG_OUTPUT_EXT=&ldquo;ogv&rdquo;
-CLIP_LENGTH=60 # seconds
-KEEP_FILES_FOR=5 # minutes</p>
+CLIP_LENGTH=600 # seconds
+TIMELIMIT=620 # seconds, allows for network timeout over CLIP_LENGTH
+KEEP_FILES_FOR=10080 # minutes</p>
 
 <p>while [ true ]; do
-  ffmpeg -t $CLIP_LENGTH $FFMPEG_INPUT_FLAGS -i $FFMPEG_SOURCE \</p>
+  avconv -timelimit $TIMELIMIT $FFMPEG_INPUT_FLAGS -i $FFMPEG_SOURCE -t $CLIP_LENGTH $FFMPEG_OUTPUT_FLAGS $OUTPUT_DIR/$(date +%F.%T).$FFMPEG_OUTPUT_EXT
+  if [ $? -ne 0 ] ;
+  then</p>
 
-<pre><code>$FFMPEG_OUTPUT_FLAGS $OUTPUT_DIR/$(date +%F.%T).$FFMPEG_OUTPUT_EXT
+<pre><code>sleep 1m ;
 </code></pre>
 
-<p>  find $OUTPUT_DIR/ -type f -mmin +$KEEP_FILES_FOR -delete
+<p>  fi
+  find $OUTPUT_DIR/ -type f -mmin +$KEEP_FILES_FOR -delete
 done
 ```</p>
 
