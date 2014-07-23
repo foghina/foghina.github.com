@@ -4,7 +4,7 @@
   <title><![CDATA[Code Ramblings]]></title>
   <link href="http://felix.oghina.com/atom.xml" rel="self"/>
   <link href="http://felix.oghina.com/"/>
-  <updated>2013-12-03T14:50:43+02:00</updated>
+  <updated>2014-07-23T20:21:41+03:00</updated>
   <id>http://felix.oghina.com/</id>
   <author>
     <name><![CDATA[Felix Oghină]]></name>
@@ -69,11 +69,11 @@ I came up with a viable solution, in bash.</p>
 </span><span class='line'><span class="nv">TIMELIMIT</span><span class="o">=</span>620 <span class="c"># seconds, allows for network timeout over CLIP_LENGTH</span>
 </span><span class='line'><span class="nv">KEEP_FILES_FOR</span><span class="o">=</span>10080 <span class="c"># minutes</span>
 </span><span class='line'>
-</span><span class='line'><span class="k">while</span> <span class="o">[</span> <span class="nb">true</span> <span class="o">]</span>; <span class="k">do</span>
+</span><span class='line'><span class="k">while</span> <span class="o">[</span> <span class="nb">true</span> <span class="o">]</span><span class="p">;</span> <span class="k">do</span>
 </span><span class='line'><span class="k">  </span>avconv -timelimit <span class="nv">$TIMELIMIT</span> <span class="nv">$FFMPEG_INPUT_FLAGS</span> -i <span class="nv">$FFMPEG_SOURCE</span> -t <span class="nv">$CLIP_LENGTH</span> <span class="nv">$FFMPEG_OUTPUT_FLAGS</span> <span class="nv">$OUTPUT_DIR</span>/<span class="k">$(</span>date +%F.%T<span class="k">)</span>.<span class="nv">$FFMPEG_OUTPUT_EXT</span>
-</span><span class='line'>  <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -ne 0 <span class="o">]</span> ;
+</span><span class='line'>  <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -ne 0 <span class="o">]</span> <span class="p">;</span>
 </span><span class='line'>  <span class="k">then</span>
-</span><span class='line'><span class="k">    </span>sleep 1m ;
+</span><span class='line'><span class="k">    </span>sleep 1m <span class="p">;</span>
 </span><span class='line'>  <span class="k">fi</span>
 </span><span class='line'><span class="k">  </span>find <span class="nv">$OUTPUT_DIR</span>/ -type f -mmin +<span class="nv">$KEEP_FILES_FOR</span> -delete
 </span><span class='line'><span class="k">done</span>
@@ -101,7 +101,7 @@ live stream I can just bookmark the RTSP stream in VLC for him or something.</p>
 <p>I wanted to use <code>find</code> to delete a bunch of files from a hierarchy, based on a simple name rule. So I thought I should use <a href="http://linux.die.net/man/1/xargs"><code>xargs</code></a> in combination with <code>find</code> to delete them. After a quick lookup of the <code>-print0</code> and <code>-name</code> arguments of the <code>find</code> command, I concluded that it would be a good idea to run the following command:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">$</span> find . -print0 -name example | xargs -0 rm
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">$</span> find . -print0 -name example <span class="p">|</span> xargs -0 rm
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -112,7 +112,7 @@ live stream I can just bookmark the RTSP stream in VLC for him or something.</p>
 <p>To conclude, the correct command would have been:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">$</span> find . -name example -print0 | xargs -0 rm
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">$</span> find . -name example -print0 <span class="p">|</span> xargs -0 rm
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -130,7 +130,7 @@ live stream I can just bookmark the RTSP stream in VLC for him or something.</p>
   <entry>
     <title type="html"><![CDATA[Beware of the JavaScript reference!]]></title>
     <link href="http://felix.oghina.com/2012/04/22/beware-of-the-javascript-reference/"/>
-    <updated>2012-04-22T12:00:00+03:00</updated>
+    <updated>2012-04-22T15:00:00+03:00</updated>
     <id>http://felix.oghina.com/2012/04/22/beware-of-the-javascript-reference</id>
     <content type="html"><![CDATA[<p>As you (hopefully) know, variables in JavaScript are actually references. As you (most surely) know, references can bite you in the ass in the most unexpected places, so here&rsquo;s one of them. Say you have an object that you continuously change (e.g. recursively) and want to see how it &ldquo;evolves&rdquo; by calling console.log() on it. You would expect to see &ldquo;snapshots&rdquo; of the object logged, right? Wrong. For example, try running this code in a console (<strong>Note:</strong> I have only tried this in Chrome, not sure how other browsers behave):</p>
 
@@ -154,7 +154,7 @@ live stream I can just bookmark the RTSP stream in VLC for him or something.</p>
   <entry>
     <title type="html"><![CDATA[Rails setup with RVM on Ubuntu]]></title>
     <link href="http://felix.oghina.com/2012/04/17/rails-setup-with-rvm-on-ubuntu/"/>
-    <updated>2012-04-17T00:39:45+03:00</updated>
+    <updated>2012-04-17T03:39:45+03:00</updated>
     <id>http://felix.oghina.com/2012/04/17/rails-setup-with-rvm-on-ubuntu</id>
     <content type="html"><![CDATA[<p>Given how developer friendly as Ruby on Rails is, getting a development environment up and running can be surprisingly tricky. I will describe the process that I consider to be &ldquo;best practice&#8221; here, step by step. Although my guide will be focused on Ubuntu, the general idea should be the same on other distros as well. Also, please take note of the date of this post. If you&rsquo;re reading this even a few months after I wrote this, don&rsquo;t be surprised if your mileage will vary.</p>
 
@@ -172,7 +172,7 @@ live stream I can just bookmark the RTSP stream in VLC for him or something.</p>
 <p>Installing RVM is dead simple. Just run the command under <strong>Quick Install</strong>:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">$</span> curl -L get.rvm.io | bash -s stable
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">$</span> curl -L get.rvm.io <span class="p">|</span> bash -s stable
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -231,7 +231,7 @@ live stream I can just bookmark the RTSP stream in VLC for him or something.</p>
 </span><span class='line'><span class="go">then you must install and use rvm 1.8.7 first.</span>
 </span><span class='line'>
 </span><span class='line'><span class="go">Additional Dependencies:</span>
-</span><span class='line'><span class="gp">#</span> For Ruby / Ruby HEAD <span class="o">(</span>MRI, Rubinius, &amp; REE<span class="o">)</span>, install the following:
+</span><span class='line'><span class="gp">#</span> For Ruby / Ruby HEAD <span class="o">(</span>MRI, Rubinius, <span class="p">&amp;</span> REE<span class="o">)</span>, install the following:
 </span><span class='line'><span class="go">  ruby: /usr/bin/apt-get install build-essential openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison subversion</span>
 </span><span class='line'>
 </span><span class='line'><span class="gp">#</span> For JRuby, install the following:

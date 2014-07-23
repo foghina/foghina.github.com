@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Shell | Code Ramblings]]></title>
+  <title><![CDATA[Category: shell | Code Ramblings]]></title>
   <link href="http://felix.oghina.com/categories/shell/atom.xml" rel="self"/>
   <link href="http://felix.oghina.com/"/>
-  <updated>2013-12-03T14:50:43+02:00</updated>
+  <updated>2014-07-23T20:21:41+03:00</updated>
   <id>http://felix.oghina.com/</id>
   <author>
     <name><![CDATA[Felix Oghină]]></name>

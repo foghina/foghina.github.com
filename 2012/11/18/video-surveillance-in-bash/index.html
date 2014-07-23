@@ -9,6 +9,9 @@
   <meta name="author" content="Felix Oghină">
 
   
+  <meta name="description" content="My parents recently asked me to install an IP video surveillance camera at their
+house (for reasons). Since I already have a Linux server there &hellip;">
+  
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -94,7 +97,7 @@
   
 
 
-<time datetime="2012-11-18T00:47:00+02:00" pubdate data-updated="true">Nov 18<span>th</span>, 2012</time>
+<time datetime="2012-11-18T00:47:00+02:00" pubdate data-updated="true">Nov 18<sup>th</sup>, 2012</time>
         
       </p>
     
@@ -152,11 +155,11 @@ I came up with a viable solution, in bash.</p>
 </span><span class='line'><span class="nv">TIMELIMIT</span><span class="o">=</span>620 <span class="c"># seconds, allows for network timeout over CLIP_LENGTH</span>
 </span><span class='line'><span class="nv">KEEP_FILES_FOR</span><span class="o">=</span>10080 <span class="c"># minutes</span>
 </span><span class='line'>
-</span><span class='line'><span class="k">while</span> <span class="o">[</span> <span class="nb">true</span> <span class="o">]</span>; <span class="k">do</span>
+</span><span class='line'><span class="k">while</span> <span class="o">[</span> <span class="nb">true</span> <span class="o">]</span><span class="p">;</span> <span class="k">do</span>
 </span><span class='line'><span class="k">  </span>avconv -timelimit <span class="nv">$TIMELIMIT</span> <span class="nv">$FFMPEG_INPUT_FLAGS</span> -i <span class="nv">$FFMPEG_SOURCE</span> -t <span class="nv">$CLIP_LENGTH</span> <span class="nv">$FFMPEG_OUTPUT_FLAGS</span> <span class="nv">$OUTPUT_DIR</span>/<span class="k">$(</span>date +%F.%T<span class="k">)</span>.<span class="nv">$FFMPEG_OUTPUT_EXT</span>
-</span><span class='line'>  <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -ne 0 <span class="o">]</span> ;
+</span><span class='line'>  <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -ne 0 <span class="o">]</span> <span class="p">;</span>
 </span><span class='line'>  <span class="k">then</span>
-</span><span class='line'><span class="k">    </span>sleep 1m ;
+</span><span class='line'><span class="k">    </span>sleep 1m <span class="p">;</span>
 </span><span class='line'>  <span class="k">fi</span>
 </span><span class='line'><span class="k">  </span>find <span class="nv">$OUTPUT_DIR</span>/ -type f -mmin +<span class="nv">$KEEP_FILES_FOR</span> -delete
 </span><span class='line'><span class="k">done</span>
@@ -193,12 +196,12 @@ live stream I can just bookmark the RTSP stream in VLC for him or something.</p>
   
 
 
-<time datetime="2012-11-18T00:47:00+02:00" pubdate data-updated="true">Nov 18<span>th</span>, 2012</time>
+<time datetime="2012-11-18T00:47:00+02:00" pubdate data-updated="true">Nov 18<sup>th</sup>, 2012</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/categories/star-nix/'>*nix</a>, <a class='category' href='/categories/coding/'>Coding</a>, <a class='category' href='/categories/shell/'>Shell</a>
+    <a class='category' href='/categories/star-nix/'>*nix</a>, <a class='category' href='/categories/coding/'>coding</a>, <a class='category' href='/categories/shell/'>shell</a>
   
 </span>
 
@@ -293,7 +296,7 @@ live stream I can just bookmark the RTSP stream in VLC for him or something.</p>
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Felix Oghină -
+  Copyright &copy; 2014 - Felix Oghină -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

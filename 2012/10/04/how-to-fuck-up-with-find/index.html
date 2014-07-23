@@ -9,6 +9,8 @@
   <meta name="author" content="Felix Oghină">
 
   
+  <meta name="description" content="Welcome to the tutorial on how to successfully fuck up with find, the command line tool. In case you&rsquo;re not familiar with the find command, &hellip;">
+  
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -94,7 +96,7 @@
   
 
 
-<time datetime="2012-10-04T20:32:00+03:00" pubdate data-updated="true">Oct 4<span>th</span>, 2012</time>
+<time datetime="2012-10-04T20:32:00+03:00" pubdate data-updated="true">Oct 4<sup>th</sup>, 2012</time>
         
       </p>
     
@@ -106,7 +108,7 @@
 <p>I wanted to use <code>find</code> to delete a bunch of files from a hierarchy, based on a simple name rule. So I thought I should use <a href="http://linux.die.net/man/1/xargs"><code>xargs</code></a> in combination with <code>find</code> to delete them. After a quick lookup of the <code>-print0</code> and <code>-name</code> arguments of the <code>find</code> command, I concluded that it would be a good idea to run the following command:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">$</span> find . -print0 -name example | xargs -0 rm
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">$</span> find . -print0 -name example <span class="p">|</span> xargs -0 rm
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -117,7 +119,7 @@
 <p>To conclude, the correct command would have been:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">$</span> find . -name example -print0 | xargs -0 rm
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="gp">$</span> find . -name example -print0 <span class="p">|</span> xargs -0 rm
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -151,12 +153,12 @@
   
 
 
-<time datetime="2012-10-04T20:32:00+03:00" pubdate data-updated="true">Oct 4<span>th</span>, 2012</time>
+<time datetime="2012-10-04T20:32:00+03:00" pubdate data-updated="true">Oct 4<sup>th</sup>, 2012</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/categories/star-nix/'>*nix</a>, <a class='category' href='/categories/shell/'>Shell</a>
+    <a class='category' href='/categories/star-nix/'>*nix</a>, <a class='category' href='/categories/shell/'>shell</a>
   
 </span>
 
@@ -253,7 +255,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Felix Oghină -
+  Copyright &copy; 2014 - Felix Oghină -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
