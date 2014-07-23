@@ -9,8 +9,8 @@
   <meta name="author" content="Felix Oghină">
 
   
-  <meta name="description" content="My parents recently asked me to install an IP video surveillance camera at their
-house (for reasons). Since I already have a Linux server there &hellip;">
+  <meta name="description" content="The title of this post may make it sound like it&rsquo;s going to be about how git changed the face of software development and entered us into a
+new &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +78,95 @@ house (for reasons). Since I already have a Linux server there &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2014/07/23/git-moving-history/">Git: Moving History</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-23T20:37:24+03:00" pubdate data-updated="true">Jul 23<sup>rd</sup>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The title of this post may make it sound like it&rsquo;s going to be about how git changed the face of software development and entered us into a
+new era of coding collaboration. No. This post is about how to copy a subtree from one git repository to another, while keeping its history.</p>
+
+<p>Let&rsquo;s say you&rsquo;ve been working on a component in an incubator-style repository, and it&rsquo;s time to move it to the main project&rsquo;s repository.
+Simply copying the code would destroy the valuable history in the target repo, so that should be avoided. There are also lots of other
+components in the incubator repo that you don&rsquo;t want to move.</p>
+
+<h2>Step 1: Export your component to a temporary repository</h2>
+
+<p>You can do this using <code>git filer-branch</code>. <em>Warning:</em> this will reduce your local copy of the incubator repository to <em>just</em> your component.
+Either clone it locally to a different path or be prepared to clone it again from the remote.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="go">incubator$ git filter-branch --subdirectory-filter components/my-component -- --all</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now your repository has been reduced to just the contents <strong>and history</strong> of <code>components/my-component</code>.</p>
+
+<h2>Step 2: Create a patch for the entire history of your component</h2>
+
+<p>Use <code>git format-patch</code> to export all of your commits to a patch file. Props to <a href="https://twitter.com/rombert">@rombert</a> for this idea.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="go">incubator$ git format-patch --stdout --root $(git rev-list HEAD | tail -n 1) HEAD &gt; my-component.patch</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I feel like this command could use some explaining. First off, we&rsquo;re telling <code>format-patch</code> to output everything to <code>--stdout</code>. Otherwise,
+it would create one patch file per commit, which can get pretty clumsy if there are lots of them. Second, we&rsquo;re passing the output of
+<code>git rev-list HEAD | tail -n 1</code> for the <code>--root</code> parameter. The enclosed command will find find the <code>sha1</code> of the very first commit, while
+the <code>--root</code> parameter will tell <code>format-patch</code> to include that commit, not start from it. Lastly, <code>HEAD</code> is the target ref, which is
+basically the most recent commit.</p>
+
+<h2>Step 3: Apply the patch</h2>
+
+<p>Now it&rsquo;s time to add your component to the main project. Of course, you don&rsquo;t want to add your component to the root of the repository
+(which is what all the paths in the patch are relative to). Thankfully, git supports prepending a path to all filenames in a patch.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='console'><span class='line'><span class="go">main-project$ git am --directory components/my-component my-component.patch</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now your main project contains your component and all of its history. Some notes:</p>
+
+<ol>
+<li>Only one branch will be copied. If your component development happened on multiple branches, that will be lost.</li>
+<li>No tags will be copied to the main repository, you will need to tag your commits manually.</li>
+<li>Commit IDs will change, so you will not be able to <a href="https://github.com/foghina/git-copy-tags">copy your tags automatically</a>.</li>
+</ol>
+
+
+<p>Pretty neat.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -545,6 +634,10 @@ Please visit https://rvm.io/integration/gnome-terminal/ for a solution.
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/07/23/git-moving-history/">Git: Moving History</a>
+      </li>
     
       <li class="post">
         <a href="/2012/11/18/video-surveillance-in-bash/">Video Surveillance&#8230; in Bash</a>

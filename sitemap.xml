@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>http://felix.oghina.com/2014/07/23/git-moving-history/</loc>
+    <lastmod>2014-07-23T20:37:24+03:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://felix.oghina.com/2012/11/18/video-surveillance-in-bash/</loc>
     <lastmod>2012-11-18T00:47:00+02:00</lastmod>
     <priority>0.8</priority>
@@ -29,14 +35,14 @@
   
   <url>
     <loc>http://felix.oghina.com/blog/archives/</loc>
-    <lastmod>2014-07-23T20:21:41+03:00</lastmod>
+    <lastmod>2014-07-23T21:55:50+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://felix.oghina.com/</loc>
-    <lastmod>2014-07-23T20:21:41+03:00</lastmod>
+    <lastmod>2014-07-23T21:55:50+03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
